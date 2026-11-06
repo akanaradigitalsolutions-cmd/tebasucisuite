@@ -1,0 +1,48 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.5/theme.json",
+	"version": 2,
+	"settings": {
+		"appearanceTools": false,
+		"color": {
+			"defaultPalette": false,
+			"defaultGradients": false,
+			"defaultDuotone": false,
+			"palette": [
+				{ "slug": "parchment", "name": "Parchment", "color": "#fbefc3" },
+				{ "slug": "cream", "name": "Cream", "color": "#f4f1e3" },
+				{ "slug": "sand", "name": "Sand", "color": "#d9cc9d" },
+				{ "slug": "olive", "name": "Olive", "color": "#8d8741" },
+				{ "slug": "moss", "name": "Moss", "color": "#5d5d4c" },
+				{ "slug": "forest", "name": "Forest", "color": "#263123" },
+				{ "slug": "white", "name": "White", "color": "#ffffff" }
+			]
+		},
+		"layout": {
+			"contentSize": "760px",
+			"wideSize": "1220px"
+		},
+		"typography": {
+			"defaultFontSizes": false,
+			"fontFamilies": [
+				{ "slug": "display", "name": "Bellefair (headings)", "fontFamily": "Bellefair, Georgia, serif" },
+				{ "slug": "body", "name": "Work Sans (text)", "fontFamily": "\"Work Sans\", Arial, sans-serif" }
+			],
+			"fontSizes": [
+				{ "slug": "small", "name": "Small", "size": "0.8rem" },
+				{ "slug": "medium", "name": "Medium", "size": "1rem" },
+				{ "slug": "large", "name": "Large", "size": "1.5rem" },
+				{ "slug": "x-large", "name": "Extra large", "size": "2.4rem" },
+				{ "slug": "display", "name": "Display", "size": "clamp(2.7rem, 4vw, 4.2rem)" }
+			]
+		}
+	},
+	"styles": {
+		"elements": {
+			"link": {
+				"typography": {
+					"textDecoration": "none"
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,5 @@
+Bellefair (Shinntype) and Work Sans (Wei Huang and the Work Sans Project Authors)
+are distributed by Google Fonts under the SIL Open Font License, Version 1.1.
+Full licence text: https://openfontlicense.org/open-font-license-official-text/
+
+The files in this folder are unmodified latin and latin-ext subsets in WOFF2 format.

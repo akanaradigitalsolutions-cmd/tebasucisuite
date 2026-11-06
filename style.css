@@ -1,0 +1,20 @@
+/*
+Theme Name: Teba Suci Suite
+Theme URI: https://tebasucisuite.com/
+Author: Teba Suci Suite
+Author URI: https://tebasucisuite.com/
+Description: Custom theme for Teba Suci Suite, Ubud, Bali. A single scrolling homepage (hero, welcome, highlights, accommodation, experience, D’Gadon Cafe, booking banner, gallery, location) where every text, link and photo is editable under Appearance → Customize → Teba Suci Suite. Inner pages, blog posts and the 404 page share the same look.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.6
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: tebasuci
+*/
+
+/*
+ * The theme's styles live in assets/css/theme.css (front end) and
+ * assets/css/editor.css (block editor). This file only carries the
+ * theme header that WordPress reads.
+ */

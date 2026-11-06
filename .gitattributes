@@ -1,0 +1,5 @@
+# Left out of the installable zip built by "git archive".
+.github export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+README.md export-ignore
