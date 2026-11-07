@@ -25,29 +25,41 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function tebasuci_bundled_images() {
 	return array(
-		'hero'  => array(
+		'hero'       => array(
 			'file'     => 'tebasuci-hero',
-			'width'    => 1920,
-			'height'   => 1280,
+			'width'    => 1080,
+			'height'   => 720,
+			'variants' => array( 640, 1024 ),
+		),
+		'suite'      => array(
+			'file'     => 'tebasuci-suite',
+			'width'    => 1080,
+			'height'   => 720,
+			'variants' => array( 640, 1024 ),
+		),
+		'pool'       => array(
+			'file'     => 'tebasuci-private-pool',
+			'width'    => 1080,
+			'height'   => 720,
+			'variants' => array( 640, 1024 ),
+		),
+		'cafe'       => array(
+			'file'     => 'tebasuci-cafe',
+			'width'    => 1080,
+			'height'   => 720,
+			'variants' => array( 640, 1024 ),
+		),
+		'experience' => array(
+			'file'     => 'tebasuci-experience',
+			'width'    => 1600,
+			'height'   => 1067,
 			'variants' => array( 640, 1024, 1440 ),
 		),
-		'suite' => array(
-			'file'     => 'tebasuci-suite',
-			'width'    => 1536,
-			'height'   => 1152,
-			'variants' => array( 640, 1024 ),
-		),
-		'pool'  => array(
-			'file'     => 'tebasuci-private-pool',
-			'width'    => 1376,
-			'height'   => 1024,
-			'variants' => array( 640, 1024 ),
-		),
-		'cafe'  => array(
-			'file'     => 'tebasuci-cafe',
-			'width'    => 1376,
-			'height'   => 1024,
-			'variants' => array( 640, 1024 ),
+		'gallery5'   => array(
+			'file'     => 'tebasuci-gallery5',
+			'width'    => 1600,
+			'height'   => 1067,
+			'variants' => array( 640, 1024, 1440 ),
 		),
 	);
 }
@@ -98,13 +110,13 @@ function tebasuci_fields() {
 	$image_note = __( 'Leave empty to use the photo that ships with the theme.', 'tebasuci' );
 	$hide_note  = __( 'Leave empty to hide it.', 'tebasuci' );
 
-	// Rooms: name, one-line detail and an optional link per row.
+	// Rooms: name, one-line detail and a link per row (from the live site).
 	$room_defaults = array(
-		1 => array( 'Jungle View Suite', 'One bedroom · A quiet outlook into the green' ),
-		2 => array( 'Rice Field View Suite', 'One bedroom · Open views across the paddies' ),
-		3 => array( 'Private Kitchen Suite', 'One bedroom · Rice field view · Kitchenette' ),
-		4 => array( 'Private Pool Villa', 'One bedroom · Your own pool and terrace' ),
-		5 => array( 'Garden View Villa', 'Two bedrooms · Room to settle in together' ),
+		1 => array( 'One Bedroom Jungle View', 'One bedroom · A quiet outlook into the green', '/one-bedroom-jungle-view/' ),
+		2 => array( 'One Bedroom Rice Field View', 'One bedroom · Open views across the paddies', '/onebedroomricefieldview/' ),
+		3 => array( 'One Bedroom Private Kitchen · Rice Field View', 'One bedroom · Rice field view · Private kitchenette', '/onebedroomprivatekitchenwithricefieldview/' ),
+		4 => array( 'One Bedroom Villa Private Pool', 'One bedroom · Your own pool and terrace', '/one-bedroom-villa-private-pool/' ),
+		5 => array( '2 Bedroom Villa Garden View', 'Two bedrooms · Garden view · Room for the family', '/2-bedroom-villa-garden-view/' ),
 	);
 
 	$room_fields = array(
@@ -129,7 +141,7 @@ function tebasuci_fields() {
 			'label'       => __( 'Photo', 'tebasuci' ),
 			'default'     => '',
 			'bundled'     => 'pool',
-			'alt'         => 'Private villa pool beside a lush rice field in Ubud',
+			'alt'         => 'A private plunge pool villa beside the rice fields at Teba Suci Suite',
 			'description' => $image_note,
 		),
 		'rooms_image_note' => array(
@@ -141,7 +153,7 @@ function tebasuci_fields() {
 	);
 
 	for ( $i = 1; $i <= tebasuci_room_slots(); $i++ ) {
-		$defaults = isset( $room_defaults[ $i ] ) ? $room_defaults[ $i ] : array( '', '' );
+		$defaults = isset( $room_defaults[ $i ] ) ? $room_defaults[ $i ] : array( '', '', '' );
 
 		$room_fields[ "room_{$i}_name" ]   = array(
 			'type'        => 'text',
@@ -160,7 +172,7 @@ function tebasuci_fields() {
 			'type'        => 'link',
 			/* translators: %d: room number. */
 			'label'       => sprintf( __( 'Room %d – link', 'tebasuci' ), $i ),
-			'default'     => '',
+			'default'     => isset( $defaults[2] ) ? $defaults[2] : '',
 			'description' => 1 === $i ? __( 'Leave empty to link to the booking engine.', 'tebasuci' ) : '',
 		);
 	}
@@ -180,10 +192,11 @@ function tebasuci_fields() {
 
 	// Gallery photos.
 	$gallery_bundled = array(
-		1 => array( 'hero', 'Tropical villa pool in the Ubud jungle' ),
-		2 => array( 'suite', 'Bright suite with garden and rice-field views' ),
-		3 => array( 'pool', 'A tranquil pool and rice field at a private villa' ),
-		4 => array( 'cafe', 'D’Gadon Cafe terrace at sunset' ),
+		1 => array( 'hero', 'The main pool and rice-field view at Teba Suci Suite' ),
+		2 => array( 'suite', 'A suite opening onto the pool and tropical greenery' ),
+		3 => array( 'pool', 'A private plunge pool beside the rice fields' ),
+		4 => array( 'cafe', 'D’Gadon Cafe terrace overlooking the rice fields' ),
+		5 => array( 'gallery5', 'Morning yoga by the rice fields at Teba Suci Suite' ),
 	);
 
 	$gallery_fields = array(
@@ -253,29 +266,29 @@ function tebasuci_fields() {
 				'maps_url'        => array(
 					'type'    => 'link',
 					'label'   => __( 'Google Maps link', 'tebasuci' ),
-					'default' => 'https://maps.google.com/?q=Teba+Suci+Suite+Bali',
+					'default' => 'https://maps.app.goo.gl/6oXzHA2DkZiZYc959',
 				),
 				'address'         => array(
 					'type'    => 'textarea',
 					'label'   => __( 'Address', 'tebasuci' ),
-					'default' => 'Ubud, Bali, Indonesia',
+					'default' => 'Jl. Raya Semana, Singakerta, Kecamatan Ubud, Kabupaten Gianyar, Bali 80571',
 				),
 				'phone'           => array(
 					'type'        => 'text',
 					'label'       => __( 'Phone', 'tebasuci' ),
-					'default'     => '',
+					'default'     => '+62 821 2970 5341',
 					'description' => __( 'Shown in the footer when filled in. Use the international format, e.g. +62 361 123 456.', 'tebasuci' ),
 				),
 				'whatsapp'        => array(
 					'type'        => 'text',
 					'label'       => __( 'WhatsApp number', 'tebasuci' ),
-					'default'     => '',
+					'default'     => '+62 821 2970 5341',
 					'description' => __( 'Shown in the footer when filled in, e.g. +62 812 3456 7890.', 'tebasuci' ),
 				),
 				'email'           => array(
 					'type'        => 'email',
 					'label'       => __( 'Email', 'tebasuci' ),
-					'default'     => '',
+					'default'     => 'info@tebasucisuite.com',
 					'description' => __( 'Shown in the footer when filled in.', 'tebasuci' ),
 				),
 				'instagram_url'   => array(
@@ -302,12 +315,12 @@ function tebasuci_fields() {
 				'wordmark_name'          => array(
 					'type'    => 'text',
 					'label'   => __( 'Text logo – name', 'tebasuci' ),
-					'default' => 'Teba Suci',
+					'default' => 'Teba Suci Suite',
 				),
 				'wordmark_subtitle'      => array(
 					'type'    => 'text',
 					'label'   => __( 'Text logo – small line', 'tebasuci' ),
-					'default' => 'Suite · Ubud, Bali',
+					'default' => 'Ubud, Bali',
 				),
 				'footer_tagline'         => array(
 					'type'    => 'textarea',
@@ -340,7 +353,7 @@ function tebasuci_fields() {
 					'label'       => __( 'Background photo', 'tebasuci' ),
 					'default'     => '',
 					'bundled'     => 'hero',
-					'alt'         => 'A secluded pool villa tucked into the Ubud jungle',
+					'alt'         => 'The main pool at Teba Suci Suite with a floating breakfast and rice-field view',
 					'description' => $image_note . ' ' . __( 'Use a wide landscape photo, at least 1920 px wide.', 'tebasuci' ),
 				),
 				'hero_eyebrow'      => array(
@@ -417,7 +430,7 @@ function tebasuci_fields() {
 					'label'       => __( 'Photo', 'tebasuci' ),
 					'default'     => '',
 					'bundled'     => 'suite',
-					'alt'         => 'A calm suite opening onto tropical greenery and rice fields',
+					'alt'         => 'A suite opening onto the pool and tropical greenery at Teba Suci Suite',
 					'description' => $image_note,
 				),
 				'welcome_caption'    => array(
@@ -507,8 +520,8 @@ function tebasuci_fields() {
 					'type'        => 'image',
 					'label'       => __( 'Photo', 'tebasuci' ),
 					'default'     => '',
-					'bundled'     => 'hero',
-					'alt'         => 'Tropical greenery surrounding a peaceful resort pool',
+					'bundled'     => 'experience',
+					'alt'         => 'Floating breakfast in the pool with rice-field views at Teba Suci Suite',
 					'description' => $image_note,
 				),
 				'experience_eyebrow'    => array(
@@ -561,21 +574,21 @@ function tebasuci_fields() {
 				'cafe_link_label' => array(
 					'type'        => 'text',
 					'label'       => __( 'Link text', 'tebasuci' ),
-					'default'     => 'Plan a visit',
+					'default'     => 'Discover D’Gadon Cafe',
 					'description' => $hide_note,
 				),
 				'cafe_link_url'   => array(
 					'type'        => 'link',
 					'label'       => __( 'Link', 'tebasuci' ),
-					'default'     => '#contact',
-					'description' => __( 'For example a menu PDF, a reservations page or #contact.', 'tebasuci' ),
+					'default'     => '/dgadoncafe/',
+					'description' => __( 'For example the cafe page, a menu PDF or #contact.', 'tebasuci' ),
 				),
 				'cafe_image'      => array(
 					'type'        => 'image',
 					'label'       => __( 'Photo', 'tebasuci' ),
 					'default'     => '',
 					'bundled'     => 'cafe',
-					'alt'         => 'Open-air cafe terrace overlooking Ubud rice fields at sunset',
+					'alt'         => 'D’Gadon Cafe terrace overlooking the rice fields at Teba Suci Suite',
 					'description' => $image_note,
 				),
 			),
@@ -588,7 +601,7 @@ function tebasuci_fields() {
 				'offer_eyebrow'      => array(
 					'type'    => 'text',
 					'label'   => __( 'Small heading', 'tebasuci' ),
-					'default' => 'A little more Bali',
+					'default' => 'Special staycation deal',
 				),
 				'offer_title'        => array(
 					'type'    => 'textarea',
@@ -598,18 +611,18 @@ function tebasuci_fields() {
 				'offer_text'         => array(
 					'type'    => 'textarea',
 					'label'   => __( 'Text', 'tebasuci' ),
-					'default' => 'Find the stay that feels right, then leave the rest to the rhythm of the island.',
+					'default' => 'Tailored packages designed to make your stay truly unforgettable — book now and indulge in the ultimate Ubud getaway.',
 				),
 				'offer_button_label' => array(
 					'type'        => 'text',
 					'label'       => __( 'Button text', 'tebasuci' ),
-					'default'     => 'View availability',
+					'default'     => 'View our special deal',
 					'description' => $hide_note,
 				),
 				'offer_button_url'   => array(
 					'type'        => 'link',
 					'label'       => __( 'Button link', 'tebasuci' ),
-					'default'     => '',
+					'default'     => '/specialoffer/',
 					'description' => __( 'Leave empty to link to the booking engine.', 'tebasuci' ),
 				),
 			),
@@ -640,7 +653,7 @@ function tebasuci_fields() {
 				'location_text'          => array(
 					'type'    => 'textarea',
 					'label'   => __( 'Text', 'tebasuci' ),
-					'default' => 'Find us in Ubud, Bali — around 15 minutes from the heart of town.',
+					'default' => 'Find us on Jl. Raya Semana, Singakerta — around 15 minutes from the heart of Ubud.',
 				),
 				'location_link_label'    => array(
 					'type'        => 'text',
@@ -674,7 +687,7 @@ function tebasuci_fields() {
 				'seo_description' => array(
 					'type'        => 'textarea',
 					'label'       => __( 'Homepage description', 'tebasuci' ),
-					'default'     => 'Discover Teba Suci Suite, a tranquil Ubud retreat with rice-field views, private pool villas, and D’Gadon Cafe.',
+					'default'     => 'Teba Suci Suite is a quiet Ubud retreat with rice-field views, private pool villas and D’Gadon Cafe — around 15 minutes from the centre of Ubud, Bali.',
 					'description' => __( 'Shown under the page title in Google results and when the site is shared. About 150 characters.', 'tebasuci' ),
 				),
 			),

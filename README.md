@@ -42,46 +42,69 @@ Also built in:
 
 ---
 
-## Deploying from GitHub
+## Deploying on Hostinger (Git)
 
-### Option A — your hosting’s Git deployment (recommended)
+Hostinger hPanel can pull this repository straight into the theme folder.
 
-Most hosts (Hostinger hPanel → *Advanced → Git*, cPanel → *Git™ Version Control*, and others) can pull
-this repository and redeploy on every push. The settings are:
+1. hPanel → your site → **Advanced → GIT**.
+2. **Create a new repository**:
+   | Field | Value |
+   | --- | --- |
+   | Repository | `git@github.com:akanaradigitalsolutions-cmd/tebasucisuite.git` |
+   | Branch | `claude/festive-heisenberg-fc7ssv` (or `main` once it exists) |
+   | Directory | `public_html/wp-content/themes/tebasuci` |
+3. The repository is **private**, so Hostinger shows an **SSH/deploy key**. Copy it, then in GitHub
+   open the repo → **Settings → Deploy keys → Add deploy key**, paste it, and save (read-only is fine).
+   Back in hPanel, finish creating the repository — it clones into the theme folder.
+4. (Optional) In the same GIT page, enable **Auto-deployment** and add the webhook URL it gives you to
+   GitHub → repo **Settings → Webhooks**. After that, every push redeploys automatically; otherwise
+   click **Deploy** in hPanel after each change.
+5. WordPress admin → **Appearance → Themes → Teba Suci Suite → Activate**.
+6. Purge caches so the new look shows: **LiteSpeed Cache → Toolbox → Purge All**, and if Cloudflare is
+   on, purge it too (Cloudflare plugin → **Purge Everything**).
 
-| Setting | Value |
-| --- | --- |
-| Repository | `https://github.com/akanaradigitalsolutions-cmd/tebasucisuite` (or the SSH form `git@github.com:akanaradigitalsolutions-cmd/tebasucisuite.git`) |
-| Branch | `main` |
-| Install path / directory | `public_html/wp-content/themes/tebasuci` (adjust if WordPress is not in `public_html`). The folder must be empty or not exist yet. |
-| Auto-deploy | Turn on if offered; the host gives a webhook URL to add in GitHub → *Settings → Webhooks*. |
+### Option B — upload a zip (no Git)
 
-Because the repository is private, the host will show an **SSH deploy key**: add it in GitHub →
-repository *Settings → Deploy keys* (read-only is enough).
+Every push also builds an installable zip: GitHub → **Actions** → latest run → **tebasuci-theme**
+artifact. Download it and upload under **Appearance → Themes → Add New → Upload Theme**.
 
-After the first deployment: WordPress admin → **Appearance → Themes → Teba Suci Suite → Activate**.
+## Your current plugins
 
-### Option B — upload a zip
+The theme was built to sit alongside what the site already runs:
 
-Every push runs the *Theme checks* workflow (GitHub → *Actions*). It checks the PHP on versions 7.4–8.3
-and attaches an installable **tebasuci-theme** zip to the run. Download it and upload it in
-**Appearance → Themes → Add New → Upload Theme**.
+- **Elementor / Elementor Pro / ElementsKit** — Elementor pages keep working under any theme, so your
+  existing inner pages (rooms, cafe, contact, special offer) stay intact. **Important:** if you built a
+  site-wide **Header or Footer in Elementor Pro → Templates → Theme Builder**, it will replace this
+  theme’s own header/footer (which are part of the design). Check Theme Builder after activating; if the
+  header/footer look wrong or doubled, disable those Elementor templates so the theme’s own ones show.
+  The new homepage is drawn by the theme (`front-page.php`), so it takes over from the old Elementor
+  homepage automatically — the old homepage content is kept, just no longer shown.
+- **Yoast SEO** — the theme detects Yoast and steps back, so titles, meta and sharing tags stay 100%
+  Yoast’s. (The theme’s own SEO tags only appear if no SEO plugin is active.)
+- **LiteSpeed Cache** — purge all after each deploy (see step 6 above).
+- **Chaty** (floating WhatsApp/chat), **3D FlipBook/dFlip**, **Really Simple SSL**, **Cloudflare**,
+  **Hostinger tools** — all work independently of the theme; no change needed.
 
 ---
 
 ## Before switching the live site
 
-1. **Back up** the current site (files and database) — most hosts have a one-click backup.
-2. If the host offers a **staging** copy, activate the theme there first.
-3. Replace the four bundled photos with real photos of the property (Customize → each section’s
-   *Photo* field). Photos of at least 1920 px wide work best for the hero.
-4. Fill in phone, WhatsApp, email and social links under *Booking & contact*.
-5. Check existing pages. Content written with the block editor, the classic editor or Elementor keeps
-   working. Content built with a theme-specific page builder (for example the builder bundled with
-   Avada or Divi) depends on that theme and will need to be rebuilt.
-6. Set up the menus if the site needs links beyond the homepage sections.
+The theme already ships with the real photos, rooms, offer and contact details pulled from the live
+site, so it looks finished the moment it is activated. Before flipping the live site:
 
-Switching back to the previous theme is always possible from *Appearance → Themes*.
+1. **Back up** first — hPanel → **Files → Backups** (or **Websites → Manage → Backups**).
+2. Use a **staging** copy if you can — hPanel → **WordPress → Staging**. Activate the theme there,
+   check the homepage and a few inner pages, then push staging to live.
+3. Add your **Instagram and Tripadvisor** links under *Customize → Teba Suci Suite → Booking & contact*
+   (these could not be read from the live site). Everything else — rooms, photos, offer, phone,
+   WhatsApp, email, address, map — is already filled in and can be changed in the same place.
+4. Check the Elementor Theme Builder header/footer note under **Your current plugins** above.
+5. Set up the **menus** (Appearance → Menus) if you want links beyond the homepage sections — for
+   example a *Special Offer* item.
+6. Purge **LiteSpeed Cache** (and Cloudflare) after activating.
+
+Switching back to the previous theme is always possible from *Appearance → Themes* — nothing is
+deleted.
 
 ---
 

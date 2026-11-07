@@ -268,6 +268,7 @@ function tebasuci_image( $key, $args = array() ) {
  * @param string $context "header" or "footer".
  */
 function tebasuci_wordmark( $context = 'header' ) {
+	// A logo set under Appearance → Customize → Site Identity always wins.
 	if ( has_custom_logo() ) {
 		echo '<div class="site-logo site-logo--' . esc_attr( $context ) . '">' . get_custom_logo() . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- core markup.
 		return;
@@ -277,6 +278,21 @@ function tebasuci_wordmark( $context = 'header' ) {
 	if ( '' === $name ) {
 		$name = get_bloginfo( 'name' );
 	}
+
+	// Otherwise use the logo image bundled with the theme, if present.
+	if ( file_exists( TEBASUCI_DIR . '/assets/images/logo.png' ) ) {
+		printf(
+			'<a class="site-logo site-logo--%1$s site-logo--bundled" href="%2$s" rel="home"><img src="%3$s" width="400" height="100" alt="%4$s" decoding="async"%5$s></a>',
+			esc_attr( $context ),
+			esc_url( tebasuci_section_url( '#home' ) ),
+			esc_url( TEBASUCI_URI . '/assets/images/logo.png' ),
+			esc_attr( $name ),
+			'header' === $context ? ' fetchpriority="high"' : ' loading="lazy"'
+		);
+		return;
+	}
+
+	// Final fallback: the text wordmark from the design.
 	$subtitle = (string) tebasuci_get( 'wordmark_subtitle' );
 
 	printf(
