@@ -316,6 +316,74 @@ small {
 	color: var(--color-olive);
 }
 
+/* Dropdown sub-menus (e.g. rooms under Accommodation) ------------------- */
+
+.nav-menu .menu-item-has-children {
+	position: relative;
+}
+
+.nav-menu .menu-item-has-children > a {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+}
+
+.nav-menu .menu-item-has-children > a::after {
+	width: 0.42em;
+	height: 0.42em;
+	border-right: 1.5px solid currentColor;
+	border-bottom: 1.5px solid currentColor;
+	transform: translateY(-0.12em) rotate(45deg);
+	opacity: 0.7;
+	transition: transform 180ms ease;
+	content: "";
+}
+
+.nav-menu .sub-menu {
+	position: absolute;
+	z-index: 40;
+	top: 100%;
+	left: -1.1rem;
+	display: grid;
+	min-width: 250px;
+	padding: 0.6rem 0;
+	background: var(--color-background);
+	box-shadow: 0 0.8rem 2rem rgba(38, 49, 35, 0.14);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(8px);
+	transition: opacity 180ms ease, transform 180ms ease, visibility 180ms;
+}
+
+.nav-menu .menu-item-has-children:hover > .sub-menu,
+.nav-menu .menu-item-has-children:focus-within > .sub-menu {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
+
+.nav-menu .menu-item-has-children:hover > a::after,
+.nav-menu .menu-item-has-children:focus-within > a::after {
+	transform: translateY(0.02em) rotate(-135deg);
+}
+
+.nav-menu .sub-menu a {
+	display: block;
+	padding: 0.6rem 1.3rem;
+	color: var(--color-forest);
+	font-size: 0.68rem;
+	letter-spacing: 0.05em;
+	line-height: 1.4;
+	text-transform: uppercase;
+	white-space: nowrap;
+	transition: color 160ms ease, background-color 160ms ease;
+}
+
+.nav-menu .sub-menu a:hover {
+	color: var(--color-olive);
+	background: var(--color-cream);
+}
+
 .header-booking {
 	min-height: 42px;
 	padding-inline: 1.2rem;
@@ -1851,6 +1919,28 @@ a.page-numbers:hover,
 		font-size: 0.75rem;
 	}
 
+	/* Sub-menus show as an indented, always-open list on mobile. */
+	.nav-menu .sub-menu {
+		position: static;
+		min-width: 0;
+		padding: 0 0 0 1rem;
+		opacity: 1;
+		visibility: visible;
+		transform: none;
+		background: transparent;
+		box-shadow: none;
+	}
+
+	.nav-menu .sub-menu a {
+		padding: 0.75rem 0;
+		border-bottom: 1px solid var(--color-border);
+		font-size: 0.68rem;
+	}
+
+	.nav-menu .menu-item-has-children > a::after {
+		margin-left: auto;
+	}
+
 	.header-booking {
 		justify-content: center;
 		margin-top: 1rem;
@@ -2700,6 +2790,18 @@ a.page-numbers:hover,
 	color: var(--color-muted);
 	font-size: 0.78rem;
 	text-align: center;
+}
+
+/* D’Gadon Cafe menu flipbook (3D FlipBook / dFlip) */
+.cafe-flipbook {
+	margin-top: 1rem;
+	min-height: 220px;
+}
+
+.cafe-flipbook ._df_book,
+.cafe-flipbook .df-container,
+.cafe-flipbook .dflip-books-page {
+	margin-inline: auto;
 }
 
 @media (max-width: 1080px) {

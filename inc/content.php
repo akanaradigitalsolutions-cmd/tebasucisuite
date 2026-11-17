@@ -639,6 +639,12 @@ function tebasuci_fields() {
 					'alt'         => 'D’Gadon Cafe terrace overlooking the rice fields at Teba Suci Suite',
 					'description' => $image_note,
 				),
+				'cafe_menu_shortcode' => array(
+					'type'        => 'text',
+					'label'       => __( 'Menu flipbook shortcode', 'tebasuci' ),
+					'default'     => '[dflip id="778"][/dflip]',
+					'description' => __( 'The 3D FlipBook shortcode for the menu, e.g. [dflip id="778"][/dflip]. When the plugin is active this interactive flipbook is shown; leave empty to show the menu pages as images instead.', 'tebasuci' ),
+				),
 			),
 		),
 		'tebasuci_offer'      => array(

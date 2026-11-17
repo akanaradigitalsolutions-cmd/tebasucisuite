@@ -313,31 +313,51 @@ function tebasuci_wordmark( $context = 'header' ) {
  */
 function tebasuci_default_menu_items( $location ) {
 	// Links to the real pages (same URLs as the live site). Until a menu is
-	// assigned under Appearance → Menus, these are used.
+	// assigned under Appearance → Menus, these are used. Each item is
+	// array( 'url', 'label', optional 'children' => array of items ).
 	if ( 'footer' === $location ) {
-		$items = array(
-			'/accomodation/' => __( 'Accommodation', 'tebasuci' ),
-			'/dgadoncafe/'   => __( 'D’Gadon Cafe', 'tebasuci' ),
-			'/gallery/'      => __( 'Gallery', 'tebasuci' ),
-			'/location/'     => __( 'Location', 'tebasuci' ),
-		);
-	} else {
-		$items = array(
-			'/'              => __( 'Home', 'tebasuci' ),
-			'/accomodation/' => __( 'Accommodation', 'tebasuci' ),
-			'/specialoffer/' => __( 'Special Offer', 'tebasuci' ),
-			'/dgadoncafe/'   => __( 'D’Gadon Cafe', 'tebasuci' ),
-			'/location/'     => __( 'Location', 'tebasuci' ),
-			'/gallery/'      => __( 'Gallery', 'tebasuci' ),
-			'/contact/'      => __( 'Contact', 'tebasuci' ),
+		return array(
+			array( 'url' => '/accomodation/', 'label' => __( 'Accommodation', 'tebasuci' ) ),
+			array( 'url' => '/dgadoncafe/', 'label' => __( 'D’Gadon Cafe', 'tebasuci' ) ),
+			array( 'url' => '/gallery/', 'label' => __( 'Gallery', 'tebasuci' ) ),
+			array( 'url' => '/location/', 'label' => __( 'Location', 'tebasuci' ) ),
 		);
 	}
 
-	return $items;
+	// Room sub-items for the Accommodation dropdown.
+	$rooms = array();
+	for ( $i = 1; $i <= tebasuci_room_slots(); $i++ ) {
+		$name = (string) tebasuci_get( "room_{$i}_name" );
+		$url  = (string) tebasuci_get( "room_{$i}_url" );
+		if ( '' !== $name && '' !== $url ) {
+			$rooms[] = array( 'url' => $url, 'label' => $name );
+		}
+	}
+
+	return array(
+		array( 'url' => '/', 'label' => __( 'Home', 'tebasuci' ) ),
+		array( 'url' => '/accomodation/', 'label' => __( 'Accommodation', 'tebasuci' ), 'children' => $rooms ),
+		array( 'url' => '/specialoffer/', 'label' => __( 'Special Offer', 'tebasuci' ) ),
+		array( 'url' => '/dgadoncafe/', 'label' => __( 'D’Gadon Cafe', 'tebasuci' ) ),
+		array( 'url' => '/location/', 'label' => __( 'Location', 'tebasuci' ) ),
+		array( 'url' => '/gallery/', 'label' => __( 'Gallery', 'tebasuci' ) ),
+		array( 'url' => '/contact/', 'label' => __( 'Contact', 'tebasuci' ) ),
+	);
+}
+
+/**
+ * Resolve a default-menu target (full URL, /path/ or #anchor) to a URL.
+ *
+ * @param string $target Target.
+ * @return string
+ */
+function tebasuci_menu_target_url( $target ) {
+	return ( '' !== $target && '#' === $target[0] ) ? tebasuci_section_url( $target ) : home_url( $target );
 }
 
 /**
  * Fallback for wp_nav_menu() when no menu is assigned to a location.
+ * Supports one level of sub-menus (e.g. rooms under Accommodation).
  *
  * @param array $args wp_nav_menu() arguments.
  * @return string|void
@@ -347,9 +367,20 @@ function tebasuci_menu_fallback( $args ) {
 	$class    = ! empty( $args['menu_class'] ) ? $args['menu_class'] : 'nav-menu';
 
 	$html = '';
-	foreach ( tebasuci_default_menu_items( $location ) as $target => $label ) {
-		$url   = ( '' !== $target && '#' === $target[0] ) ? tebasuci_section_url( $target ) : home_url( $target );
-		$html .= '<li class="menu-item"><a href="' . esc_url( $url ) . '">' . esc_html( $label ) . '</a></li>';
+	foreach ( tebasuci_default_menu_items( $location ) as $item ) {
+		$has_children = ! empty( $item['children'] );
+		$html        .= '<li class="menu-item' . ( $has_children ? ' menu-item-has-children' : '' ) . '">';
+		$html        .= '<a href="' . esc_url( tebasuci_menu_target_url( $item['url'] ) ) . '">' . esc_html( $item['label'] ) . '</a>';
+
+		if ( $has_children ) {
+			$html .= '<ul class="sub-menu">';
+			foreach ( $item['children'] as $child ) {
+				$html .= '<li class="menu-item"><a href="' . esc_url( tebasuci_menu_target_url( $child['url'] ) ) . '">' . esc_html( $child['label'] ) . '</a></li>';
+			}
+			$html .= '</ul>';
+		}
+
+		$html .= '</li>';
 	}
 	$html = '<ul class="' . esc_attr( $class ) . '">' . $html . '</ul>';
 
@@ -361,7 +392,7 @@ function tebasuci_menu_fallback( $args ) {
 }
 
 /**
- * Print the menu for a location (single level).
+ * Print the menu for a location (up to two levels, so dropdowns work).
  *
  * @param string $location   Menu location.
  * @param string $menu_class Class of the <ul>.
@@ -372,7 +403,7 @@ function tebasuci_nav_menu( $location, $menu_class ) {
 			'theme_location' => $location,
 			'container'      => false,
 			'menu_class'     => $menu_class,
-			'depth'          => 1,
+			'depth'          => 'footer' === $location ? 1 : 2,
 			'fallback_cb'    => 'tebasuci_menu_fallback',
 		)
 	);
