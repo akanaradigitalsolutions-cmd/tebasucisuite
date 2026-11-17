@@ -294,7 +294,7 @@ function tebasuci_fields() {
 				'instagram_url'   => array(
 					'type'    => 'link',
 					'label'   => __( 'Instagram link', 'tebasuci' ),
-					'default' => '',
+					'default' => 'https://www.instagram.com/tebasucisuite/',
 				),
 				'facebook_url'    => array(
 					'type'    => 'link',
@@ -304,7 +304,7 @@ function tebasuci_fields() {
 				'tripadvisor_url' => array(
 					'type'    => 'link',
 					'label'   => __( 'Tripadvisor link', 'tebasuci' ),
-					'default' => '',
+					'default' => 'https://www.tripadvisor.com/Hotel_Review-g15880600-d27685441-Reviews-Teba_Suci_Suite-Singakerta_Ubud_Gianyar_Regency_Bali.html',
 				),
 			),
 		),
