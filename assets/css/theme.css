@@ -2226,3 +2226,622 @@ a.page-numbers:hover,
 		transform: none;
 	}
 }
+
+/* ==========================================================================
+   Inner page templates (Accommodation, Room, Gallery, Cafe, Location,
+   Contact, Special Offer)
+   ========================================================================== */
+
+.rooms-page,
+.gallery-page,
+.cafe-page,
+.location-page,
+.contact-page,
+.offers-page {
+	width: min(100% - 3.5rem, 1220px);
+	margin: 0 auto;
+	padding: 1rem 0 6rem;
+}
+
+/* Accommodation: alternating room cards --------------------------------- */
+
+.room-card {
+	display: grid;
+	grid-template-columns: 1.05fr 0.95fr;
+	gap: clamp(2rem, 6vw, 5rem);
+	align-items: center;
+	padding: clamp(2.5rem, 6vw, 4rem) 0;
+	border-bottom: 1px solid var(--color-border);
+}
+
+.room-card:last-of-type {
+	border-bottom: 0;
+}
+
+.room-card:nth-child(even) .room-card-media {
+	order: 2;
+}
+
+.room-card-media {
+	position: relative;
+}
+
+.room-card-media img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 1.3;
+	object-fit: cover;
+}
+
+.room-card-index {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	padding: 0.6rem 1rem;
+	background: var(--color-background);
+	color: var(--color-olive);
+	font-family: var(--font-display);
+	font-size: 1.1rem;
+}
+
+.room-card-name {
+	font-family: var(--font-display);
+	font-weight: 400;
+	font-size: clamp(1.9rem, 3vw, 2.6rem);
+	line-height: 1.05;
+}
+
+.room-card-summary {
+	max-width: 46ch;
+	margin-top: 1rem;
+	color: var(--color-muted);
+	font-size: 0.92rem;
+	line-height: 1.85;
+}
+
+.room-specs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 0.75rem;
+	margin: 1.4rem 0 0;
+}
+
+.room-specs li {
+	padding: 0.35rem 0.8rem;
+	border: 1px solid var(--color-border);
+	border-radius: 2px;
+	color: var(--color-forest);
+	font-size: 0.68rem;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.room-card-footer {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-top: 1.8rem;
+}
+
+.room-card-price {
+	font-family: var(--font-display);
+	font-size: 1.25rem;
+	color: var(--color-forest);
+}
+
+.room-card-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1.5rem;
+}
+
+.room-card-actions .text-link {
+	margin-top: 0;
+}
+
+.room-card-actions .room-cta {
+	margin-top: 0;
+}
+
+/* Single room ----------------------------------------------------------- */
+
+.page-hero--room .page-title {
+	margin-top: 0.6rem;
+}
+
+.room-single-photo {
+	width: min(100% - 3.5rem, 1220px);
+	margin: 2.5rem auto 0;
+}
+
+.room-single-photo img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 1.6;
+	object-fit: cover;
+}
+
+.room-single-body {
+	display: grid;
+	grid-template-columns: 1.15fr 0.85fr;
+	gap: clamp(2.5rem, 7vw, 6rem);
+	width: min(100% - 3.5rem, 1120px);
+	margin: clamp(3rem, 6vw, 4.5rem) auto 0;
+	align-items: start;
+}
+
+.room-single-main p {
+	margin-top: 1rem;
+	color: var(--color-forest);
+	font-size: 0.98rem;
+	line-height: 1.95;
+}
+
+.room-single-main > .eyebrow {
+	margin-bottom: 0.4rem;
+}
+
+.room-stay-times {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1.5rem;
+	margin-top: 2.2rem;
+	padding-top: 1.8rem;
+	border-top: 1px solid var(--color-border);
+}
+
+.room-stay-times p {
+	margin-top: 0.4rem;
+	font-size: 0.85rem;
+}
+
+.room-single-aside {
+	position: sticky;
+	top: calc(var(--header-height) + 1.5rem);
+	display: grid;
+	gap: 1.8rem;
+}
+
+.room-aside-card {
+	padding: 1.8rem;
+	background: var(--color-cream);
+	border: 1px solid var(--color-border);
+}
+
+.room-detail-list {
+	display: grid;
+	gap: 0.7rem;
+}
+
+.room-detail-list li {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	padding-bottom: 0.7rem;
+	border-bottom: 1px solid var(--color-border);
+	font-size: 0.85rem;
+}
+
+.room-detail-list li:last-child {
+	border-bottom: 0;
+	padding-bottom: 0;
+}
+
+.room-detail-list span {
+	color: var(--color-muted);
+}
+
+.room-detail-list strong {
+	font-weight: 500;
+	text-align: right;
+}
+
+.room-aside-price {
+	margin-top: 1.3rem;
+	font-family: var(--font-display);
+	font-size: 1.4rem;
+}
+
+.room-aside-book {
+	width: 100%;
+	margin-top: 1.3rem;
+}
+
+.room-aside-info {
+	margin-top: 1rem;
+	color: var(--color-muted);
+	font-size: 0.78rem;
+	line-height: 1.7;
+}
+
+.room-aside-info a {
+	color: var(--color-forest);
+}
+
+.room-amenities .eyebrow {
+	margin-bottom: 0.9rem;
+}
+
+.room-amenities ul {
+	display: grid;
+	gap: 0.6rem;
+}
+
+.room-amenities li {
+	position: relative;
+	padding-left: 1.4rem;
+	font-size: 0.85rem;
+	line-height: 1.5;
+}
+
+.room-amenities li::before {
+	position: absolute;
+	left: 0;
+	top: 0.05em;
+	color: var(--color-olive);
+	content: "✦";
+	font-size: 0.75rem;
+}
+
+.room-back {
+	width: min(100% - 3.5rem, 1120px);
+	margin: 3.5rem auto 0;
+}
+
+.room-back .text-link {
+	margin-top: 0;
+}
+
+/* Gallery page ---------------------------------------------------------- */
+
+.gallery-page-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-auto-rows: 260px;
+	gap: 0.85rem;
+	margin-top: 1.5rem;
+}
+
+.gallery-page-item {
+	margin: 0;
+	overflow: hidden;
+}
+
+.gallery-page-item--wide {
+	grid-column: span 2;
+}
+
+.gallery-page-item img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 600ms var(--ease-out);
+}
+
+.gallery-page-item:hover img {
+	transform: scale(1.04);
+}
+
+/* D'Gadon Cafe page ----------------------------------------------------- */
+
+.cafe-page-intro {
+	display: grid;
+	grid-template-columns: 1fr 0.9fr;
+	gap: clamp(2.5rem, 7vw, 6rem);
+	align-items: center;
+	margin-top: 1rem;
+}
+
+.cafe-page-copy p {
+	margin-top: 1.1rem;
+	color: var(--color-forest);
+	font-size: 0.98rem;
+	line-height: 1.95;
+}
+
+.cafe-page-actions {
+	margin-top: 1.8rem;
+}
+
+.cafe-page-lead img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 1.1;
+	object-fit: cover;
+}
+
+.cafe-page-gallery {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.85rem;
+	margin-top: 3rem;
+}
+
+.cafe-page-gallery img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 1.5;
+	object-fit: cover;
+}
+
+/* Location page --------------------------------------------------------- */
+
+.location-map {
+	margin-top: 1.5rem;
+	aspect-ratio: 2.3;
+	overflow: hidden;
+	border: 1px solid var(--color-border);
+}
+
+.location-map iframe {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+
+.location-details {
+	display: grid;
+	grid-template-columns: 0.8fr 1.2fr;
+	gap: clamp(2.5rem, 7vw, 5rem);
+	margin-top: 3.5rem;
+}
+
+.location-address-text {
+	max-width: 24ch;
+	margin-top: 0.9rem;
+	font-family: var(--font-display);
+	font-size: 1.35rem;
+	line-height: 1.4;
+}
+
+.location-address .text-link {
+	margin-top: 1.3rem;
+}
+
+.location-landmarks .eyebrow {
+	margin-bottom: 1.2rem;
+}
+
+.landmark-list {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0 clamp(1.5rem, 4vw, 3rem);
+}
+
+.landmark-list li {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 0.85rem 0;
+	border-bottom: 1px solid var(--color-border);
+}
+
+.landmark-name {
+	font-size: 0.9rem;
+}
+
+.landmark-time {
+	flex-shrink: 0;
+	color: var(--color-olive);
+	font-family: var(--font-display);
+	font-size: 1.05rem;
+}
+
+/* Contact page ---------------------------------------------------------- */
+
+.contact-page {
+	display: grid;
+	grid-template-columns: 0.75fr 1.25fr;
+	gap: clamp(2.5rem, 7vw, 5rem);
+	align-items: start;
+	padding-bottom: 3.5rem;
+}
+
+.contact-block + .contact-block {
+	margin-top: 1.8rem;
+}
+
+.contact-block .eyebrow {
+	margin-bottom: 0.6rem;
+}
+
+.contact-block p {
+	font-size: 0.92rem;
+	line-height: 1.7;
+}
+
+.contact-lines {
+	display: grid;
+	gap: 0.5rem;
+}
+
+.contact-lines li {
+	font-size: 0.92rem;
+}
+
+.contact-lines a {
+	color: var(--color-forest);
+}
+
+.contact-lines a:hover {
+	color: var(--color-olive);
+}
+
+.contact-lines small {
+	color: var(--color-muted);
+	font-size: 0.7rem;
+}
+
+.contact-form-wrap > .eyebrow {
+	margin-bottom: 1.2rem;
+}
+
+.contact-form p {
+	margin-bottom: 1.1rem;
+}
+
+.contact-form-hp {
+	position: absolute;
+	left: -9999px;
+	height: 0;
+	overflow: hidden;
+}
+
+.contact-form .button {
+	margin-top: 0.4rem;
+}
+
+.form-notice {
+	margin-bottom: 1.5rem;
+	padding: 0.9rem 1.1rem;
+	border-left: 3px solid var(--color-olive);
+	background: var(--color-cream);
+	font-size: 0.9rem;
+}
+
+.form-notice--error {
+	border-left-color: var(--destructive, #b3261e);
+}
+
+.location-map--contact {
+	width: min(100% - 3.5rem, 1220px);
+	margin: 0 auto 6rem;
+	aspect-ratio: 2.6;
+}
+
+/* Special Offer page ---------------------------------------------------- */
+
+.offer-card {
+	display: grid;
+	grid-template-columns: 0.95fr 1.05fr;
+	gap: clamp(2rem, 6vw, 4.5rem);
+	align-items: center;
+	padding: clamp(2.5rem, 6vw, 4rem) 0;
+	border-bottom: 1px solid var(--color-border);
+}
+
+.offer-card:last-of-type {
+	border-bottom: 0;
+}
+
+.offer-card:nth-child(even) .offer-card-media {
+	order: 2;
+}
+
+.offer-card-media img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 1.4;
+	object-fit: cover;
+}
+
+.offer-card-title {
+	font-family: var(--font-display);
+	font-weight: 400;
+	font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+	line-height: 1.08;
+}
+
+.offer-card-body p {
+	max-width: 48ch;
+	margin-top: 1rem;
+	color: var(--color-muted);
+	font-size: 0.92rem;
+	line-height: 1.85;
+}
+
+/* Responsive ------------------------------------------------------------ */
+
+@media (max-width: 1080px) {
+	.rooms-page,
+	.gallery-page,
+	.cafe-page,
+	.location-page,
+	.contact-page,
+	.offers-page {
+		width: min(100% - 2.5rem, 1220px);
+	}
+}
+
+@media (max-width: 900px) {
+	.room-single-body {
+		grid-template-columns: 1fr;
+	}
+
+	.room-single-aside {
+		position: static;
+	}
+
+	.cafe-page-intro {
+		grid-template-columns: 1fr;
+	}
+
+	.contact-page {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 760px) {
+	.rooms-page,
+	.gallery-page,
+	.cafe-page,
+	.location-page,
+	.contact-page,
+	.offers-page {
+		width: calc(100% - 2.5rem);
+	}
+
+	.room-card,
+	.offer-card {
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
+	}
+
+	.room-card:nth-child(even) .room-card-media,
+	.offer-card:nth-child(even) .offer-card-media {
+		order: 0;
+	}
+
+	.room-single-photo,
+	.room-back,
+	.location-map--contact {
+		width: calc(100% - 2.5rem);
+	}
+
+	.room-single-photo img {
+		aspect-ratio: 1.3;
+	}
+
+	.gallery-page-grid {
+		grid-template-columns: 1fr 1fr;
+		grid-auto-rows: 200px;
+	}
+
+	.gallery-page-item--wide {
+		grid-column: span 2;
+	}
+
+	.cafe-page-gallery {
+		grid-template-columns: 1fr;
+	}
+
+	.location-details {
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+	}
+
+	.landmark-list {
+		grid-template-columns: 1fr;
+	}
+
+	.room-card-footer {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+}

@@ -21,7 +21,8 @@ There is no build step: plain PHP, CSS and JavaScript. What is in Git is exactly
 | Header menu and footer “Explore” links | **Appearance → Menus** (locations “Header menu” and “Footer ‘Explore’ links”). Until a menu is assigned, the links from the design are used. Use *Custom Links* such as `/#accommodation`, `/#cafe`, `/#gallery`, `/#location`, `/#contact` to point at homepage sections. |
 | Logo image (optional — replaces the text logo) and browser icon | Customize → **Site Identity** |
 | Browser-tab title (“Teba Suci Suite \| A Quiet Stay in Ubud, Bali”) | **Settings → General** → Site Title and Tagline |
-| Inner pages, blog posts, blog list, search, 404 | Normal WordPress pages and posts, written in the block editor. Pages use the same look automatically; the *Full width (no title)* template is available for pages laid out entirely with blocks. |
+| The nav pages: **Accommodation, each Room, Gallery, D’Gadon Cafe, Location, Contact, Special Offer** | Built-in **page templates** in the new design, pre-filled with the property’s own content (see *The inner pages* below). |
+| Blog posts, blog list, search, 404, and any other page | Normal WordPress pages/posts in the block editor. They use the same look automatically; the *Full width (no title)* template is available for pages laid out entirely with blocks. |
 
 Also built in:
 
@@ -32,6 +33,33 @@ Also built in:
   automatically).
 - Accessible markup: skip link, keyboard-friendly mobile menu, visible focus outlines, reduced-motion
   support, “opens in a new tab” hints for screen readers.
+
+### The inner pages (multi-page setup)
+
+The site is multi-page, like the original. The homepage is the landing page, and each nav item is its
+own page in the new design. The theme ships a **template** for each one, already filled with the
+content pulled from the live site (room descriptions, amenities, specs, the cafe text, location
+landmarks, contact details and the special-offer packages).
+
+**One-time setup** — assign each template to its page. In WordPress: **Pages** → open (or Quick Edit)
+the page → set **Template** → **Update**. Reuse the existing pages so the URLs stay the same:
+
+| Page (existing URL) | Template to choose |
+| --- | --- |
+| `/accomodation/` | **Accommodation** |
+| each room: `/one-bedroom-jungle-view/`, `/onebedroomricefieldview/`, `/onebedroomprivatekitchenwithricefieldview/`, `/one-bedroom-villa-private-pool/`, `/2-bedroom-villa-garden-view/` | **Room (single room)** |
+| `/gallery/` | **Gallery** |
+| `/dgadoncafe/` | **D’Gadon Cafe** |
+| `/location/` | **Location** |
+| `/contact/` | **Contact** |
+| `/specialoffer/` | **Special Offer** |
+
+The **Room** template knows which room to show by matching the page’s URL to the room links in
+*Customize → Teba Suci Suite → Accommodation*. Room names, photos, rates and booking links live there;
+the longer descriptions and amenities are set from the live-site content.
+
+The **Contact** page includes a simple working message form (sent to the admin email under
+*Settings → General*). To use a form plugin instead, drop its shortcode into the page content.
 
 ### Differences from the design file (intentional)
 

@@ -16,5 +16,7 @@ define( 'TEBASUCI_URI', get_template_directory_uri() );
 require TEBASUCI_DIR . '/inc/content.php';
 require TEBASUCI_DIR . '/inc/setup.php';
 require TEBASUCI_DIR . '/inc/template-tags.php';
+require TEBASUCI_DIR . '/inc/pages.php';
+require TEBASUCI_DIR . '/inc/contact-form.php';
 require TEBASUCI_DIR . '/inc/customizer.php';
 require TEBASUCI_DIR . '/inc/seo.php';

@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return array
  */
 function tebasuci_bundled_images() {
-	return array(
+	$images = array(
 		'hero'       => array(
 			'file'     => 'tebasuci-hero',
 			'width'    => 1080,
@@ -62,6 +62,30 @@ function tebasuci_bundled_images() {
 			'variants' => array( 640, 1024, 1440 ),
 		),
 	);
+
+	// Per-room photos (used on the Accommodation and Room pages).
+	for ( $i = 1; $i <= 5; $i++ ) {
+		$images[ "room-{$i}" ] = array(
+			'file'     => "tebasuci-room-{$i}",
+			'width'    => 1080,
+			'height'   => 720,
+			'variants' => array( 640, 1024 ),
+		);
+	}
+
+	// Photos for the full Gallery page (01–04, 11–12 are 3:2 1080-wide; 05–10 are 1600-wide).
+	$wide = array( 5, 6, 7, 8, 9, 10 );
+	for ( $i = 1; $i <= 12; $i++ ) {
+		$is_wide              = in_array( $i, $wide, true );
+		$images[ sprintf( 'gallery-%02d', $i ) ] = array(
+			'file'     => sprintf( 'tebasuci-gallery-%02d', $i ),
+			'width'    => $is_wide ? 1600 : 1080,
+			'height'   => $is_wide ? 1067 : 720,
+			'variants' => $is_wide ? array( 640, 1024, 1440 ) : array( 640, 1024 ),
+		);
+	}
+
+	return $images;
 }
 
 /**
@@ -171,9 +195,25 @@ function tebasuci_fields() {
 		$room_fields[ "room_{$i}_url" ]    = array(
 			'type'        => 'link',
 			/* translators: %d: room number. */
-			'label'       => sprintf( __( 'Room %d – link', 'tebasuci' ), $i ),
+			'label'       => sprintf( __( 'Room %d – page link', 'tebasuci' ), $i ),
 			'default'     => isset( $defaults[2] ) ? $defaults[2] : '',
-			'description' => 1 === $i ? __( 'Leave empty to link to the booking engine.', 'tebasuci' ) : '',
+			'description' => 1 === $i ? __( 'The room’s own page. Leave empty to link to the booking engine.', 'tebasuci' ) : '',
+		);
+		$room_fields[ "room_{$i}_photo" ]  = array(
+			'type'        => 'image',
+			/* translators: %d: room number. */
+			'label'       => sprintf( __( 'Room %d – photo', 'tebasuci' ), $i ),
+			'default'     => '',
+			'bundled'     => $i <= 5 ? "room-{$i}" : '',
+			'alt'         => isset( $defaults[0] ) ? $defaults[0] . ' at Teba Suci Suite' : '',
+			'description' => 1 === $i ? __( 'Shown on the Accommodation page and the room’s own page.', 'tebasuci' ) : '',
+		);
+		$room_fields[ "room_{$i}_price" ]  = array(
+			'type'        => 'text',
+			/* translators: %d: room number. */
+			'label'       => sprintf( __( 'Room %d – rate (optional)', 'tebasuci' ), $i ),
+			'default'     => '',
+			'description' => 1 === $i ? __( 'For example “from IDR 850,000 / night”. Leave empty to show only the Book button.', 'tebasuci' ) : '',
 		);
 	}
 
@@ -186,7 +226,7 @@ function tebasuci_fields() {
 	$room_fields['rooms_button_url']   = array(
 		'type'        => 'link',
 		'label'       => __( 'Button link', 'tebasuci' ),
-		'default'     => '',
+		'default'     => '/accomodation/',
 		'description' => __( 'Leave empty to link to the booking engine.', 'tebasuci' ),
 	);
 
@@ -381,7 +421,7 @@ function tebasuci_fields() {
 				'hero_button_url'   => array(
 					'type'    => 'link',
 					'label'   => __( 'Button link', 'tebasuci' ),
-					'default' => '#accommodation',
+					'default' => '/accomodation/',
 				),
 				'hero_scroll_label' => array(
 					'type'    => 'text',
@@ -423,7 +463,7 @@ function tebasuci_fields() {
 				'welcome_link_url'   => array(
 					'type'    => 'link',
 					'label'   => __( 'Link', 'tebasuci' ),
-					'default' => '#accommodation',
+					'default' => '/accomodation/',
 				),
 				'welcome_image'      => array(
 					'type'        => 'image',
@@ -548,7 +588,7 @@ function tebasuci_fields() {
 				'experience_link_url'   => array(
 					'type'    => 'link',
 					'label'   => __( 'Link', 'tebasuci' ),
-					'default' => '#gallery',
+					'default' => '/gallery/',
 				),
 			),
 		),

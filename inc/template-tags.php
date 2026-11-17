@@ -312,34 +312,25 @@ function tebasuci_wordmark( $context = 'header' ) {
  * @return array Anchor => label.
  */
 function tebasuci_default_menu_items( $location ) {
+	// Links to the real pages (same URLs as the live site). Until a menu is
+	// assigned under Appearance → Menus, these are used.
 	if ( 'footer' === $location ) {
 		$items = array(
-			'#accommodation' => __( 'Accommodation', 'tebasuci' ),
-			'#cafe'          => __( 'D’Gadon Cafe', 'tebasuci' ),
-			'#gallery'       => __( 'Gallery', 'tebasuci' ),
-			'#location'      => __( 'Location', 'tebasuci' ),
+			'/accomodation/' => __( 'Accommodation', 'tebasuci' ),
+			'/dgadoncafe/'   => __( 'D’Gadon Cafe', 'tebasuci' ),
+			'/gallery/'      => __( 'Gallery', 'tebasuci' ),
+			'/location/'     => __( 'Location', 'tebasuci' ),
 		);
 	} else {
 		$items = array(
-			'#home'          => __( 'Home', 'tebasuci' ),
-			'#accommodation' => __( 'Accommodation', 'tebasuci' ),
-			'#cafe'          => __( 'D’Gadon Cafe', 'tebasuci' ),
-			'#location'      => __( 'Location', 'tebasuci' ),
-			'#gallery'       => __( 'Gallery', 'tebasuci' ),
-			'#contact'       => __( 'Contact', 'tebasuci' ),
+			'/'              => __( 'Home', 'tebasuci' ),
+			'/accomodation/' => __( 'Accommodation', 'tebasuci' ),
+			'/specialoffer/' => __( 'Special Offer', 'tebasuci' ),
+			'/dgadoncafe/'   => __( 'D’Gadon Cafe', 'tebasuci' ),
+			'/location/'     => __( 'Location', 'tebasuci' ),
+			'/gallery/'      => __( 'Gallery', 'tebasuci' ),
+			'/contact/'      => __( 'Contact', 'tebasuci' ),
 		);
-	}
-
-	$sections = array(
-		'#accommodation' => 'rooms',
-		'#cafe'          => 'cafe',
-		'#location'      => 'location',
-		'#gallery'       => 'gallery',
-	);
-	foreach ( $sections as $hash => $section ) {
-		if ( isset( $items[ $hash ] ) && ! tebasuci_show( $section ) ) {
-			unset( $items[ $hash ] );
-		}
 	}
 
 	return $items;
@@ -356,8 +347,9 @@ function tebasuci_menu_fallback( $args ) {
 	$class    = ! empty( $args['menu_class'] ) ? $args['menu_class'] : 'nav-menu';
 
 	$html = '';
-	foreach ( tebasuci_default_menu_items( $location ) as $hash => $label ) {
-		$html .= '<li class="menu-item"><a href="' . esc_url( tebasuci_section_url( $hash ) ) . '">' . esc_html( $label ) . '</a></li>';
+	foreach ( tebasuci_default_menu_items( $location ) as $target => $label ) {
+		$url   = ( '' !== $target && '#' === $target[0] ) ? tebasuci_section_url( $target ) : home_url( $target );
+		$html .= '<li class="menu-item"><a href="' . esc_url( $url ) . '">' . esc_html( $label ) . '</a></li>';
 	}
 	$html = '<ul class="' . esc_attr( $class ) . '">' . $html . '</ul>';
 
