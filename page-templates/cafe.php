@@ -60,24 +60,13 @@ tebasuci_render_page_hero(
 			</figure>
 		<?php endforeach; ?>
 	</div>
-
-	<?php
-	while ( have_posts() ) :
-		the_post();
-		if ( '' !== trim( get_the_content() ) ) :
-			?>
-			<div class="entry-content"><?php the_content(); ?></div>
-			<?php
-		endif;
-	endwhile;
-	?>
 </section>
 
 <?php
 // Prefer the D’Gadon Cafe flipbook (3D FlipBook / dFlip) when the plugin is
 // active; otherwise fall back to the rendered menu pages bundled with the theme.
 $tebasuci_menu_sc  = (string) tebasuci_get( 'cafe_menu_shortcode' );
-$tebasuci_menu_tag = ( '' !== $tebasuci_menu_sc && preg_match( '/\[([a-z0-9_-]+)/i', $tebasuci_menu_sc, $tebasuci_m ) ) ? $tebasuci_m[1] : '';
+$tebasuci_menu_tag = tebasuci_cafe_menu_shortcode_tag();
 $tebasuci_flipbook = ( '' !== $tebasuci_menu_tag && shortcode_exists( $tebasuci_menu_tag ) );
 $tebasuci_has_imgs = tebasuci_has_cafe_menu();
 ?>

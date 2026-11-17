@@ -240,6 +240,48 @@ function tebasuci_has_cafe_menu() {
 }
 
 /**
+ * The shortcode tag configured for the cafe menu flipbook (e.g. "dflip"),
+ * or '' when none is set.
+ *
+ * @return string
+ */
+function tebasuci_cafe_menu_shortcode_tag() {
+	$shortcode = (string) tebasuci_get( 'cafe_menu_shortcode' );
+	if ( '' !== $shortcode && preg_match( '/\[([a-z0-9_-]+)/i', $shortcode, $m ) ) {
+		return strtolower( $m[1] );
+	}
+	return '';
+}
+
+/**
+ * DearFlip (dFlip) loads its scripts only when it finds its shortcode in a
+ * page's content. The cafe template calls the shortcode from PHP, so enqueue
+ * the plugin's registered assets directly on that page.
+ */
+function tebasuci_enqueue_cafe_flipbook() {
+	if ( ! is_page_template( 'page-templates/cafe.php' ) ) {
+		return;
+	}
+
+	$tag = tebasuci_cafe_menu_shortcode_tag();
+	if ( '' === $tag || ! shortcode_exists( $tag ) ) {
+		return;
+	}
+
+	foreach ( array( 'three', 'mockup', 'dflip', 'dearflip', 'dflip-min' ) as $handle ) {
+		if ( wp_script_is( $handle, 'registered' ) && ! wp_script_is( $handle, 'enqueued' ) ) {
+			wp_enqueue_script( $handle );
+		}
+	}
+	foreach ( array( 'dflip', 'dflip-fontawesome', 'dearflip' ) as $handle ) {
+		if ( wp_style_is( $handle, 'registered' ) && ! wp_style_is( $handle, 'enqueued' ) ) {
+			wp_enqueue_style( $handle );
+		}
+	}
+}
+add_action( 'wp_enqueue_scripts', 'tebasuci_enqueue_cafe_flipbook', 20 );
+
+/**
  * Nearby landmarks for the Location page: name => drive time.
  *
  * @return array

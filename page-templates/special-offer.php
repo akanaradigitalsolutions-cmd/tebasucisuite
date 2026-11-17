@@ -54,17 +54,6 @@ tebasuci_render_page_hero(
 			</div>
 		</article>
 	<?php endforeach; ?>
-
-	<?php
-	while ( have_posts() ) :
-		the_post();
-		if ( '' !== trim( get_the_content() ) ) :
-			?>
-			<div class="entry-content"><?php the_content(); ?></div>
-			<?php
-		endif;
-	endwhile;
-	?>
 </section>
 
 <?php

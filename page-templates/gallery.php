@@ -45,18 +45,6 @@ tebasuci_render_page_hero(
 			</figure>
 		<?php endfor; ?>
 	</div>
-
-	<?php
-	// If the page itself has content (e.g. a gallery block), show it too.
-	while ( have_posts() ) :
-		the_post();
-		if ( '' !== trim( get_the_content() ) ) :
-			?>
-			<div class="entry-content"><?php the_content(); ?></div>
-			<?php
-		endif;
-	endwhile;
-	?>
 </section>
 
 <?php
