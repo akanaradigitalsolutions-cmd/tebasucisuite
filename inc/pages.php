@@ -215,7 +215,28 @@ function tebasuci_cafe_data() {
 			__( 'Talk to our staff about any allergies and we will suggest alternatives to suit your needs. Our chef’s favourite dishes, enjoyed over a view of the rice fields, make a visit here one of the more unforgettable moments of your time in Bali.', 'tebasuci' ),
 		),
 		'gallery'     => array( 'cafe', 'gallery-10', 'gallery-05' ),
+		'menu'        => array(
+			'pdf'    => TEBASUCI_URI . '/assets/menu/cafe-menu.pdf',
+			'labels' => array(
+				__( 'Breakfast', 'tebasuci' ),
+				__( 'Lunch & Dinner', 'tebasuci' ),
+				__( 'Main course', 'tebasuci' ),
+				__( 'Pizza & Dessert', 'tebasuci' ),
+				__( 'Drinks', 'tebasuci' ),
+				__( 'Cocktails & Mocktails', 'tebasuci' ),
+			),
+		),
 	);
+}
+
+/**
+ * Whether the cafe menu PDF is bundled with the theme.
+ *
+ * @return bool
+ */
+function tebasuci_has_cafe_menu() {
+	return file_exists( TEBASUCI_DIR . '/assets/menu/cafe-menu.pdf' )
+		&& file_exists( TEBASUCI_DIR . '/assets/images/cafe-menu-1.jpg' );
 }
 
 /**

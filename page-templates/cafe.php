@@ -28,6 +28,12 @@ tebasuci_render_page_hero(
 			<?php endforeach; ?>
 			<div class="cafe-page-actions">
 				<?php tebasuci_link( $tebasuci_booking, __( 'Reserve a table', 'tebasuci' ), 'button room-cta' ); ?>
+				<?php if ( tebasuci_has_cafe_menu() ) : ?>
+					<a class="button offer-button" href="#menu">
+						<span><?php esc_html_e( 'View the menu', 'tebasuci' ); ?></span>
+						<?php echo tebasuci_icon( 'arrow-down' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?>
+					</a>
+				<?php endif; ?>
 			</div>
 		</div>
 
@@ -66,6 +72,37 @@ tebasuci_render_page_hero(
 	endwhile;
 	?>
 </section>
+
+<?php if ( tebasuci_has_cafe_menu() ) : ?>
+	<section class="cafe-menu" id="menu">
+		<div class="cafe-menu-head" data-reveal>
+			<div>
+				<span class="eyebrow"><?php esc_html_e( 'The menu', 'tebasuci' ); ?></span>
+				<h2><?php esc_html_e( 'What’s cooking', 'tebasuci' ); ?></h2>
+			</div>
+			<?php tebasuci_link( $tebasuci_cafe['menu']['pdf'], __( 'Download the full menu (PDF)', 'tebasuci' ), 'text-link', 'arrow-down' ); ?>
+		</div>
+
+		<div class="cafe-menu-grid">
+			<?php
+			$tebasuci_labels = $tebasuci_cafe['menu']['labels'];
+			for ( $tebasuci_p = 1; $tebasuci_p <= count( $tebasuci_labels ); $tebasuci_p++ ) :
+				$tebasuci_full  = TEBASUCI_URI . '/assets/images/cafe-menu-' . $tebasuci_p . '.jpg';
+				$tebasuci_thumb = TEBASUCI_URI . '/assets/images/cafe-menu-' . $tebasuci_p . '-620.jpg';
+				$tebasuci_label = $tebasuci_labels[ $tebasuci_p - 1 ];
+				?>
+				<figure class="cafe-menu-page" data-reveal>
+					<a href="<?php echo esc_url( $tebasuci_full ); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: menu section name. */ __( 'Open the %s menu full size', 'tebasuci' ), $tebasuci_label ) ); ?>">
+						<img src="<?php echo esc_url( $tebasuci_thumb ); ?>" srcset="<?php echo esc_url( $tebasuci_thumb ); ?> 620w, <?php echo esc_url( $tebasuci_full ); ?> 1240w" sizes="(max-width: 760px) calc(100vw - 2.5rem), 360px" width="1240" height="1754" alt="<?php echo esc_attr( sprintf( /* translators: %s: menu section name. */ __( 'D’Gadon Cafe menu — %s', 'tebasuci' ), $tebasuci_label ) ); ?>" loading="lazy" decoding="async">
+					</a>
+					<figcaption><?php echo esc_html( $tebasuci_label ); ?></figcaption>
+				</figure>
+			<?php endfor; ?>
+		</div>
+
+		<p class="cafe-menu-note"><?php esc_html_e( 'Prices do not include 15% tax and 10% service. Tap a page to view it full size.', 'tebasuci' ); ?></p>
+	</section>
+<?php endif; ?>
 
 <?php
 get_template_part( 'template-parts/offer', null, array( 'context' => 'inner' ) );
