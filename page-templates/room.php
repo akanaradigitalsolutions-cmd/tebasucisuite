@@ -3,9 +3,10 @@
  * Template Name: Room (single room)
  * Template Post Type: page
  *
- * A single room: photo, description, amenities, details and a booking link.
- * The room is matched to this page by its link in the Customizer. If no room
- * matches, the page's own content is shown instead.
+ * A single room in an editorial, luxury layout: full-bleed hero, overview with
+ * key details, description, amenities, a photo gallery and a booking band.
+ * The room is matched to this page by its link in the Customizer; if no room
+ * matches, the page's own content is shown.
  *
  * @package TebaSuci
  */
@@ -19,32 +20,88 @@ if ( $tebasuci_i && isset( $tebasuci_data[ $tebasuci_i ] ) ) :
 	$tebasuci_room    = $tebasuci_data[ $tebasuci_i ];
 	$tebasuci_name    = (string) tebasuci_get( "room_{$tebasuci_i}_name" );
 	$tebasuci_detail  = (string) tebasuci_get( "room_{$tebasuci_i}_detail" );
-	$tebasuci_price   = (string) tebasuci_get( "room_{$tebasuci_i}_price" );
 	$tebasuci_booking = (string) tebasuci_get( 'booking_url' );
+	$tebasuci_phone   = (string) tebasuci_get( 'phone' );
 	$tebasuci_times   = tebasuci_stay_times();
+
+	// Collect the room's gallery photos.
+	$tebasuci_gallery = array();
+	for ( $tebasuci_g = 2; $tebasuci_g <= 4; $tebasuci_g++ ) {
+		$tebasuci_img = tebasuci_bundled_image( "room-{$tebasuci_i}-{$tebasuci_g}" );
+		if ( $tebasuci_img ) {
+			$tebasuci_gallery[] = $tebasuci_img;
+		}
+	}
 	?>
-	<article class="room-single">
-		<header class="page-hero page-hero--room">
-			<div class="page-hero-inner" data-reveal>
+	<article class="room-lux">
+		<section class="room-hero">
+			<?php
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper.
+			echo tebasuci_image(
+				"room_{$tebasuci_i}_photo",
+				array(
+					'class'    => 'room-hero-img',
+					'sizes'    => '100vw',
+					'priority' => true,
+				)
+			);
+			?>
+			<div class="room-hero-shade" aria-hidden="true"></div>
+			<div class="room-hero-inner" data-reveal>
 				<span class="eyebrow"><?php echo esc_html( $tebasuci_detail ? $tebasuci_detail : __( 'Accommodation', 'tebasuci' ) ); ?></span>
-				<h1 class="page-title"><?php echo esc_html( $tebasuci_name ); ?></h1>
-				<?php if ( '' !== $tebasuci_room['summary'] ) : ?>
-					<p class="page-intro"><?php echo esc_html( $tebasuci_room['summary'] ); ?></p>
-				<?php endif; ?>
+				<h1><?php echo esc_html( $tebasuci_name ); ?></h1>
 			</div>
-		</header>
+		</section>
 
-		<figure class="room-single-photo" data-reveal>
-			<?php echo tebasuci_image( "room_{$tebasuci_i}_photo", array( 'sizes' => '(max-width: 1280px) calc(100vw - 3.5rem), 1220px' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>
-		</figure>
+		<section class="room-overview">
+			<?php if ( '' !== $tebasuci_room['summary'] ) : ?>
+				<p class="room-lead" data-reveal><?php echo esc_html( $tebasuci_room['summary'] ); ?></p>
+			<?php endif; ?>
 
-		<div class="room-single-body">
-			<div class="room-single-main" data-reveal>
-				<span class="eyebrow"><?php esc_html_e( 'Room description', 'tebasuci' ); ?></span>
+			<?php if ( $tebasuci_room['specs'] ) : ?>
+				<ul class="room-facts" data-reveal>
+					<?php foreach ( $tebasuci_room['specs'] as $tebasuci_key => $tebasuci_val ) : ?>
+						<li>
+							<span class="room-fact-label"><?php echo esc_html( ucfirst( $tebasuci_key ) ); ?></span>
+							<span class="room-fact-value"><?php echo esc_html( $tebasuci_val ); ?></span>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+		</section>
+
+		<section class="room-detail">
+			<div class="room-story" data-reveal>
+				<span class="eyebrow"><?php esc_html_e( 'The room', 'tebasuci' ); ?></span>
 				<?php foreach ( $tebasuci_room['description'] as $tebasuci_para ) : ?>
 					<p><?php echo esc_html( $tebasuci_para ); ?></p>
 				<?php endforeach; ?>
+			</div>
 
+			<?php if ( $tebasuci_room['amenities'] ) : ?>
+				<div class="room-features" data-reveal>
+					<span class="eyebrow"><?php esc_html_e( 'Features & amenities', 'tebasuci' ); ?></span>
+					<ul>
+						<?php foreach ( $tebasuci_room['amenities'] as $tebasuci_amenity ) : ?>
+							<li><?php echo esc_html( $tebasuci_amenity ); ?></li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+			<?php endif; ?>
+		</section>
+
+		<?php if ( $tebasuci_gallery ) : ?>
+			<section class="room-gallery" aria-label="<?php esc_attr_e( 'Room photos', 'tebasuci' ); ?>">
+				<?php foreach ( $tebasuci_gallery as $tebasuci_img ) : ?>
+					<figure data-reveal>
+						<img src="<?php echo esc_url( $tebasuci_img['src'] ); ?>" srcset="<?php echo esc_attr( $tebasuci_img['srcset'] ); ?>" sizes="(max-width: 760px) calc(100vw - 2.5rem), 390px" width="<?php echo (int) $tebasuci_img['width']; ?>" height="<?php echo (int) $tebasuci_img['height']; ?>" alt="" loading="lazy" decoding="async">
+					</figure>
+				<?php endforeach; ?>
+			</section>
+		<?php endif; ?>
+
+		<section class="room-stay">
+			<div class="room-stay-inner" data-reveal>
 				<div class="room-stay-times">
 					<div>
 						<span class="eyebrow"><?php esc_html_e( 'Check-in', 'tebasuci' ); ?></span>
@@ -55,44 +112,17 @@ if ( $tebasuci_i && isset( $tebasuci_data[ $tebasuci_i ] ) ) :
 						<p><?php echo esc_html( $tebasuci_times['checkout'] ); ?></p>
 					</div>
 				</div>
-			</div>
-
-			<aside class="room-single-aside" data-reveal>
-				<div class="room-aside-card">
-					<?php if ( $tebasuci_room['specs'] ) : ?>
-						<ul class="room-detail-list">
-							<?php foreach ( $tebasuci_room['specs'] as $tebasuci_key => $tebasuci_val ) : ?>
-								<li><span><?php echo esc_html( ucfirst( $tebasuci_key ) ); ?></span><strong><?php echo esc_html( $tebasuci_val ); ?></strong></li>
-							<?php endforeach; ?>
-						</ul>
-					<?php endif; ?>
-
-					<?php if ( '' !== $tebasuci_price ) : ?>
-						<p class="room-aside-price"><?php echo esc_html( $tebasuci_price ); ?></p>
-					<?php endif; ?>
-
-					<?php tebasuci_link( $tebasuci_booking, __( 'Book your stay', 'tebasuci' ), 'button room-cta room-aside-book' ); ?>
-
-					<?php if ( tebasuci_get( 'phone' ) ) : ?>
-						<p class="room-aside-info">
-							<?php esc_html_e( 'For information', 'tebasuci' ); ?><br>
-							<?php tebasuci_link( 'tel:' . preg_replace( '/[^0-9+]/', '', (string) tebasuci_get( 'phone' ) ), (string) tebasuci_get( 'phone' ), '', '' ); ?>
+				<div class="room-stay-cta">
+					<?php tebasuci_link( $tebasuci_booking, __( 'Reserve your stay', 'tebasuci' ), 'button hero-button' ); ?>
+					<?php if ( '' !== $tebasuci_phone ) : ?>
+						<p class="room-stay-phone">
+							<?php esc_html_e( 'For reservations', 'tebasuci' ); ?><br>
+							<?php tebasuci_link( 'tel:' . preg_replace( '/[^0-9+]/', '', $tebasuci_phone ), $tebasuci_phone, '', '' ); ?>
 						</p>
 					<?php endif; ?>
 				</div>
-
-				<?php if ( $tebasuci_room['amenities'] ) : ?>
-					<div class="room-amenities">
-						<span class="eyebrow"><?php esc_html_e( 'Features & amenities', 'tebasuci' ); ?></span>
-						<ul>
-							<?php foreach ( $tebasuci_room['amenities'] as $tebasuci_amenity ) : ?>
-								<li><?php echo esc_html( $tebasuci_amenity ); ?></li>
-							<?php endforeach; ?>
-						</ul>
-					</div>
-				<?php endif; ?>
-			</aside>
-		</div>
+			</div>
+		</section>
 
 		<nav class="room-back">
 			<?php tebasuci_link( '/accomodation/', __( 'All accommodation', 'tebasuci' ), 'text-link' ); ?>
@@ -118,7 +148,8 @@ else :
 		</article>
 		<?php
 	endwhile;
+
+	get_template_part( 'template-parts/offer', null, array( 'context' => 'inner' ) );
 endif;
 
-get_template_part( 'template-parts/offer', null, array( 'context' => 'inner' ) );
 get_footer();

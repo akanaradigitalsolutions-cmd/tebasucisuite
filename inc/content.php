@@ -63,14 +63,22 @@ function tebasuci_bundled_images() {
 		),
 	);
 
-	// Per-room photos (used on the Accommodation and Room pages).
+	// Per-room photos: a hero plus three gallery photos each.
 	for ( $i = 1; $i <= 5; $i++ ) {
 		$images[ "room-{$i}" ] = array(
 			'file'     => "tebasuci-room-{$i}",
-			'width'    => 1080,
-			'height'   => 720,
+			'width'    => 1440,
+			'height'   => 960,
 			'variants' => array( 640, 1024 ),
 		);
+		for ( $g = 2; $g <= 4; $g++ ) {
+			$images[ "room-{$i}-{$g}" ] = array(
+				'file'     => "tebasuci-room-{$i}-{$g}",
+				'width'    => 1024,
+				'height'   => 683,
+				'variants' => array( 640 ),
+			);
+		}
 	}
 
 	// Photos for the full Gallery page (01–04, 11–12 are 3:2 1080-wide; 05–10 are 1600-wide).
