@@ -248,11 +248,21 @@ function tebasuci_offers_data() {
 
 	return array(
 		array(
-			'title'  => __( 'Nyepi Package 2026', 'tebasuci' ),
-			'text'   => __( 'Experience the tranquillity of Nyepi with a serene stay in our One-Bedroom Suite — Rice Field View, designed for relaxation and a connection with nature.', 'tebasuci' ),
-			'photo'  => 'gallery-08',
-			'label'  => __( 'Reserve this package', 'tebasuci' ),
-			'url'    => $booking,
+			'title'    => __( 'Nyepi Package 2027', 'tebasuci' ),
+			'text'     => __( 'Experience the tranquillity of Nyepi with a serene stay in our One-Bedroom Suite — Rice Field View, designed for relaxation and a connection with nature.', 'tebasuci' ),
+			'photo'    => 'gallery-08',
+			'price'    => __( 'IDR 3,575,000', 'tebasuci' ),
+			'meta'     => __( '2 nights · 3 days — check-in 7 March, check-out 9 March 2027', 'tebasuci' ),
+			'includes' => array(
+				__( '2 nights in our Private Kitchen Room, Rice Field View', 'tebasuci' ),
+				__( 'Welcome drink on arrival', 'tebasuci' ),
+				__( 'Daily breakfast for two', 'tebasuci' ),
+				__( 'Lunch on 8 March 2027', 'tebasuci' ),
+				__( 'Dinner on 8 March 2027', 'tebasuci' ),
+				__( 'Daily afternoon tea', 'tebasuci' ),
+			),
+			'label'    => __( 'Reserve this package', 'tebasuci' ),
+			'url'      => 'https://wa.me/6282129705341',
 		),
 		array(
 			'title'  => __( 'Pool with Floating Breakfast', 'tebasuci' ),

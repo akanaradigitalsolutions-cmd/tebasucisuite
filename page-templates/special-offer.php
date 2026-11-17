@@ -32,8 +32,25 @@ tebasuci_render_page_hero(
 			<?php endif; ?>
 			<div class="offer-card-body">
 				<h2 class="offer-card-title"><?php echo esc_html( $tebasuci_offer['title'] ); ?></h2>
+				<?php if ( ! empty( $tebasuci_offer['meta'] ) ) : ?>
+					<p class="offer-card-meta"><?php echo esc_html( $tebasuci_offer['meta'] ); ?></p>
+				<?php endif; ?>
 				<p><?php echo esc_html( $tebasuci_offer['text'] ); ?></p>
-				<?php tebasuci_link( $tebasuci_offer['url'], $tebasuci_offer['label'], 'text-link' ); ?>
+
+				<?php if ( ! empty( $tebasuci_offer['includes'] ) ) : ?>
+					<ul class="offer-includes">
+						<?php foreach ( $tebasuci_offer['includes'] as $tebasuci_inc ) : ?>
+							<li><?php echo esc_html( $tebasuci_inc ); ?></li>
+						<?php endforeach; ?>
+					</ul>
+				<?php endif; ?>
+
+				<div class="offer-card-footer">
+					<?php if ( ! empty( $tebasuci_offer['price'] ) ) : ?>
+						<span class="offer-card-price"><?php echo esc_html( $tebasuci_offer['price'] ); ?></span>
+					<?php endif; ?>
+					<?php tebasuci_link( $tebasuci_offer['url'], $tebasuci_offer['label'], 'text-link' ); ?>
+				</div>
 			</div>
 		</article>
 	<?php endforeach; ?>
