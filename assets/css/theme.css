@@ -189,6 +189,96 @@ small {
 	box-shadow: var(--shadow-header);
 }
 
+/* Homepage preloader
+   -------------------------------------------------------------------------- */
+
+.site-preloader {
+	position: fixed;
+	z-index: 9999;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	background: var(--color-background);
+	transition: opacity 650ms ease, visibility 650ms ease;
+}
+
+/* Shown only with JS, and skipped after the first page of a session. */
+html:not(.js) .site-preloader,
+html.preloaded .site-preloader {
+	display: none;
+}
+
+.site-preloader.is-hidden {
+	opacity: 0;
+	visibility: hidden;
+}
+
+.site-preloader-inner {
+	text-align: center;
+}
+
+.preloader-mark {
+	display: block;
+	color: var(--color-forest);
+	font-family: var(--font-display);
+	font-size: clamp(2rem, 6vw, 3.1rem);
+	letter-spacing: 0.01em;
+	opacity: 0;
+	animation: preloader-fade 800ms ease forwards;
+}
+
+.preloader-bar {
+	position: relative;
+	display: block;
+	width: 130px;
+	height: 1px;
+	margin: 1.3rem auto 0;
+	overflow: hidden;
+	background: var(--color-sand);
+}
+
+.preloader-bar::after {
+	position: absolute;
+	inset: 0;
+	left: -45%;
+	width: 45%;
+	background: var(--color-olive);
+	animation: preloader-slide 1.15s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+	content: "";
+}
+
+@keyframes preloader-fade {
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes preloader-slide {
+	0% {
+		left: -45%;
+	}
+	100% {
+		left: 100%;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.site-preloader {
+		transition: none;
+	}
+
+	.preloader-mark {
+		animation: none;
+		opacity: 1;
+	}
+
+	.preloader-bar::after {
+		animation: none;
+		left: 0;
+		width: 100%;
+	}
+}
+
 /* Layout wrapper
    -------------------------------------------------------------------------- */
 
@@ -2794,14 +2884,57 @@ a.page-numbers:hover,
 
 /* D’Gadon Cafe menu flipbook (3D FlipBook / dFlip) */
 .cafe-flipbook {
+	position: relative;
 	margin-top: 1rem;
-	min-height: 220px;
+	min-height: 320px;
 }
 
 .cafe-flipbook ._df_book,
 .cafe-flipbook .df-container,
 .cafe-flipbook .dflip-books-page {
 	margin-inline: auto;
+}
+
+.flipbook-loading {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	color: var(--color-muted);
+	font-size: 0.72rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	transition: opacity 400ms ease;
+}
+
+.flipbook-loading.is-hidden {
+	opacity: 0;
+	pointer-events: none;
+}
+
+.flipbook-spinner {
+	width: 34px;
+	height: 34px;
+	border: 2px solid var(--color-sand);
+	border-top-color: var(--color-olive);
+	border-radius: 50%;
+	animation: flipbook-spin 0.8s linear infinite;
+}
+
+@keyframes flipbook-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.flipbook-spinner {
+		animation-duration: 1.6s;
+	}
 }
 
 @media (max-width: 1080px) {

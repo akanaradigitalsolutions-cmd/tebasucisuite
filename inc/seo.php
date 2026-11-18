@@ -111,16 +111,49 @@ function tebasuci_social_meta() {
 add_action( 'wp_head', 'tebasuci_social_meta', 5 );
 
 /**
- * Hotel details for search engines (schema.org), on the homepage.
+ * A schema.org PostalAddress built from the plain address string.
+ *
+ * @return array|null
+ */
+function tebasuci_postal_address() {
+	$raw = trim( (string) tebasuci_get( 'address' ) );
+	if ( '' === $raw ) {
+		return null;
+	}
+
+	$flat  = preg_replace( '/\s*\n\s*/', ', ', $raw );
+	$parts = array_values( array_filter( array_map( 'trim', explode( ',', $flat ) ) ) );
+
+	$address = array( '@type' => 'PostalAddress' );
+	if ( ! empty( $parts[0] ) ) {
+		$address['streetAddress'] = $parts[0];
+	}
+	if ( preg_match( '/\b(\d{5})\b/', $flat, $m ) ) {
+		$address['postalCode'] = $m[1];
+	}
+	$address['addressLocality'] = apply_filters( 'tebasuci_address_locality', 'Ubud' );
+	$address['addressRegion']   = apply_filters( 'tebasuci_address_region', 'Bali' );
+	$address['addressCountry']  = apply_filters( 'tebasuci_address_country', 'ID' );
+
+	return $address;
+}
+
+/**
+ * Lodging/hotel details for search engines and AI answers (schema.org).
+ *
+ * Output on the homepage even when a SEO plugin is active: Yoast, Rank Math
+ * and the like describe the page and the organisation, but not the property
+ * as a hotel with rooms, amenities and a location, so this complements them.
  */
 function tebasuci_structured_data() {
-	if ( ! is_front_page() || tebasuci_has_seo_plugin() ) {
+	if ( ! is_front_page() || ! apply_filters( 'tebasuci_output_lodging_schema', true ) ) {
 		return;
 	}
 
 	$data = array(
 		'@context' => 'https://schema.org',
-		'@type'    => 'Hotel',
+		'@type'    => array( 'Hotel', 'LodgingBusiness' ),
+		'@id'      => home_url( '/#lodging' ),
 		'name'     => wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ),
 		'url'      => home_url( '/' ),
 	);
@@ -130,14 +163,44 @@ function tebasuci_structured_data() {
 		$data['description'] = $description;
 	}
 
-	$hero = tebasuci_image_sources( 'hero_image' );
-	if ( $hero ) {
-		$data['image'] = $hero['src'];
+	$images = array();
+	foreach ( array( 'hero_image', 'welcome_image', 'cafe_image' ) as $key ) {
+		$img = tebasuci_image_sources( $key );
+		if ( $img ) {
+			$images[] = $img['src'];
+		}
+	}
+	if ( $images ) {
+		$data['image'] = $images;
 	}
 
-	$address = trim( preg_replace( '/\s*\n\s*/', ', ', (string) tebasuci_get( 'address' ) ) );
-	if ( '' !== $address ) {
+	if ( has_custom_logo() ) {
+		$logo = wp_get_attachment_image_src( (int) get_theme_mod( 'custom_logo' ), 'full' );
+		if ( $logo ) {
+			$data['logo'] = $logo[0];
+		}
+	} elseif ( file_exists( TEBASUCI_DIR . '/assets/images/logo.png' ) ) {
+		$data['logo'] = TEBASUCI_URI . '/assets/images/logo.png';
+	}
+
+	$address = tebasuci_postal_address();
+	if ( $address ) {
 		$data['address'] = $address;
+	}
+
+	$lat = (string) tebasuci_get( 'geo_latitude' );
+	$lng = (string) tebasuci_get( 'geo_longitude' );
+	if ( '' !== $lat && '' !== $lng ) {
+		$data['geo'] = array(
+			'@type'     => 'GeoCoordinates',
+			'latitude'  => $lat,
+			'longitude' => $lng,
+		);
+	}
+
+	$maps = (string) tebasuci_get( 'maps_url' );
+	if ( '' !== $maps ) {
+		$data['hasMap'] = $maps;
 	}
 
 	$phone = (string) tebasuci_get( 'phone' );
@@ -146,8 +209,23 @@ function tebasuci_structured_data() {
 	}
 
 	$email = (string) tebasuci_get( 'email' );
-	if ( '' !== $email ) {
+	if ( '' !== $email && is_email( $email ) ) {
 		$data['email'] = $email;
+	}
+
+	$data['priceRange']         = '$$';
+	$data['currenciesAccepted'] = 'IDR';
+	$data['checkinTime']        = '14:00';
+	$data['checkoutTime']       = '11:00';
+	$data['numberOfRooms']      = 12;
+
+	$data['amenityFeature'] = array();
+	foreach ( array( 'Outdoor swimming pool', 'Free Wi-Fi', 'Restaurant', 'Air conditioning', 'Rice-field view', 'Airport shuttle', 'Daily housekeeping' ) as $feature ) {
+		$data['amenityFeature'][] = array(
+			'@type' => 'LocationFeatureSpecification',
+			'name'  => $feature,
+			'value' => true,
+		);
 	}
 
 	$same_as = array_values(
@@ -166,3 +244,26 @@ function tebasuci_structured_data() {
 	echo '<script type="application/ld+json">' . wp_json_encode( $data, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG ) . '</script>' . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- JSON with tags hex-escaped.
 }
 add_action( 'wp_head', 'tebasuci_structured_data', 6 );
+
+/**
+ * Geo meta tags for local search (not output by the common SEO plugins).
+ */
+function tebasuci_geo_meta() {
+	if ( ! is_front_page() ) {
+		return;
+	}
+
+	$lat   = (string) tebasuci_get( 'geo_latitude' );
+	$lng   = (string) tebasuci_get( 'geo_longitude' );
+	$place = trim( preg_replace( '/\s*\n\s*/', ', ', (string) tebasuci_get( 'address' ) ) );
+
+	if ( '' !== $place ) {
+		printf( '<meta name="geo.placename" content="%s">' . "\n", esc_attr( $place ) );
+	}
+	printf( '<meta name="geo.region" content="%s">' . "\n", esc_attr( apply_filters( 'tebasuci_geo_region', 'ID-BA' ) ) );
+	if ( '' !== $lat && '' !== $lng ) {
+		printf( '<meta name="geo.position" content="%s;%s">' . "\n", esc_attr( $lat ), esc_attr( $lng ) );
+		printf( '<meta name="ICBM" content="%s, %s">' . "\n", esc_attr( $lat ), esc_attr( $lng ) );
+	}
+}
+add_action( 'wp_head', 'tebasuci_geo_meta', 4 );

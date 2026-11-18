@@ -735,14 +735,26 @@ function tebasuci_fields() {
 			),
 		),
 		'tebasuci_seo'        => array(
-			'title'       => __( 'Search & sharing', 'tebasuci' ),
-			'description' => __( 'Used only when no SEO plugin (Yoast SEO, Rank Math, All in One SEO, SEOPress, The SEO Framework) is active. The browser-tab title comes from Settings → General: “Site Title | Tagline”.', 'tebasuci' ),
+			'title'       => __( 'Search, sharing & map', 'tebasuci' ),
+			'description' => __( 'The description/sharing text is used only when no SEO plugin (Yoast, Rank Math, etc.) is active. The map coordinates below power the location schema and geo tags and are always used.', 'tebasuci' ),
 			'fields'      => array(
 				'seo_description' => array(
 					'type'        => 'textarea',
 					'label'       => __( 'Homepage description', 'tebasuci' ),
 					'default'     => 'Teba Suci Suite is a quiet Ubud retreat with rice-field views, private pool villas and D’Gadon Cafe — around 15 minutes from the centre of Ubud, Bali.',
 					'description' => __( 'Shown under the page title in Google results and when the site is shared. About 150 characters.', 'tebasuci' ),
+				),
+				'geo_latitude'    => array(
+					'type'        => 'text',
+					'label'       => __( 'Latitude', 'tebasuci' ),
+					'default'     => '-8.5272',
+					'description' => __( 'For local search and maps. Find it by right-clicking your spot in Google Maps and copying the first number.', 'tebasuci' ),
+				),
+				'geo_longitude'   => array(
+					'type'        => 'text',
+					'label'       => __( 'Longitude', 'tebasuci' ),
+					'default'     => '115.2516',
+					'description' => __( 'The second number from Google Maps.', 'tebasuci' ),
 				),
 			),
 		),

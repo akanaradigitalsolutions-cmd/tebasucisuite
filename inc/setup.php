@@ -133,6 +133,28 @@ function tebasuci_preload_assets() {
 add_action( 'wp_head', 'tebasuci_preload_assets', 1 );
 
 /**
+ * Faster connections to the booking engine and map provider.
+ *
+ * @param array  $hints    URLs to hint.
+ * @param string $relation Hint type.
+ * @return array
+ */
+function tebasuci_resource_hints( $hints, $relation ) {
+	if ( 'dns-prefetch' === $relation ) {
+		$booking_host = wp_parse_url( (string) tebasuci_get( 'booking_url' ), PHP_URL_HOST );
+		if ( $booking_host ) {
+			$hints[] = '//' . $booking_host;
+		}
+		if ( is_page_template( array( 'page-templates/location.php', 'page-templates/contact.php' ) ) ) {
+			$hints[] = '//maps.google.com';
+			$hints[] = '//maps.gstatic.com';
+		}
+	}
+	return $hints;
+}
+add_filter( 'wp_resource_hints', 'tebasuci_resource_hints', 10, 2 );
+
+/**
  * Browser-tab titles read "Page | Teba Suci Suite".
  *
  * @return string

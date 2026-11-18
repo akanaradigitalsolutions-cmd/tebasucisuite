@@ -84,6 +84,10 @@ $tebasuci_has_imgs = tebasuci_has_cafe_menu();
 
 		<?php if ( $tebasuci_flipbook ) : ?>
 			<div class="cafe-flipbook" data-reveal>
+				<div class="flipbook-loading">
+					<span class="flipbook-spinner" aria-hidden="true"></span>
+					<span><?php esc_html_e( 'Loading the menu…', 'tebasuci' ); ?></span>
+				</div>
 				<?php echo do_shortcode( $tebasuci_menu_sc ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- plugin shortcode output. ?>
 			</div>
 		<?php else : ?>
