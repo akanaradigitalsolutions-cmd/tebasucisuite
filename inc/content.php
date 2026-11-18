@@ -45,8 +45,14 @@ function tebasuci_bundled_images() {
 		),
 		'cafe'       => array(
 			'file'     => 'tebasuci-cafe',
-			'width'    => 1080,
-			'height'   => 720,
+			'width'    => 1440,
+			'height'   => 960,
+			'variants' => array( 640, 1024 ),
+		),
+		'cafe-2'     => array(
+			'file'     => 'tebasuci-cafe-2',
+			'width'    => 1440,
+			'height'   => 960,
 			'variants' => array( 640, 1024 ),
 		),
 		'experience' => array(
@@ -243,7 +249,7 @@ function tebasuci_fields() {
 		1 => array( 'hero', 'The main pool and rice-field view at Teba Suci Suite' ),
 		2 => array( 'suite', 'A suite opening onto the pool and tropical greenery' ),
 		3 => array( 'pool', 'A private plunge pool beside the rice fields' ),
-		4 => array( 'cafe', 'D’Gadon Cafe terrace overlooking the rice fields' ),
+		4 => array( 'cafe', 'The dining pavilion at D’Gadon Cafe' ),
 		5 => array( 'gallery5', 'Morning yoga by the rice fields at Teba Suci Suite' ),
 	);
 
@@ -636,7 +642,7 @@ function tebasuci_fields() {
 					'label'       => __( 'Photo', 'tebasuci' ),
 					'default'     => '',
 					'bundled'     => 'cafe',
-					'alt'         => 'D’Gadon Cafe terrace overlooking the rice fields at Teba Suci Suite',
+					'alt'         => 'The bamboo dining pavilion at D’Gadon Cafe, Teba Suci Suite',
 					'description' => $image_note,
 				),
 				'cafe_menu_shortcode' => array(

@@ -214,7 +214,7 @@ function tebasuci_cafe_data() {
 			__( 'Teba Suci Suite is home to a restaurant we call D’Gadon Cafe. We keep the quality of our ingredients and the preparation of our food and drinks to the highest standards, overseen by a team of highly trained chefs and servers who greet every guest warmly.', 'tebasuci' ),
 			__( 'Talk to our staff about any allergies and we will suggest alternatives to suit your needs. Our chef’s favourite dishes, enjoyed over a view of the rice fields, make a visit here one of the more unforgettable moments of your time in Bali.', 'tebasuci' ),
 		),
-		'gallery'     => array( 'cafe', 'gallery-10', 'gallery-05' ),
+		'gallery'     => array( 'cafe', 'cafe-2', 'gallery-05' ),
 		'menu'        => array(
 			'pdf'    => TEBASUCI_URI . '/assets/menu/cafe-menu.pdf',
 			'labels' => array(
