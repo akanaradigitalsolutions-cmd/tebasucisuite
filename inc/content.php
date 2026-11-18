@@ -44,7 +44,7 @@ function tebasuci_bundled_images() {
 			'variants' => array( 640, 1024 ),
 		),
 		'cafe'       => array(
-			'file'     => 'tebasuci-cafe',
+			'file'     => 'tebasuci-cafe-hall',
 			'width'    => 1440,
 			'height'   => 960,
 			'variants' => array( 640, 1024 ),
