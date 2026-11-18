@@ -44,7 +44,7 @@ $tebasuci_scroll = (string) tebasuci_get( 'hero_scroll_label' );
 	<?php if ( '' !== $tebasuci_scroll ) : ?>
 		<a class="hero-scroll" href="<?php echo esc_url( tebasuci_first_section_after_hero() ); ?>" aria-label="<?php echo esc_attr( $tebasuci_scroll ); ?>">
 			<span><?php echo esc_html( $tebasuci_scroll ); ?></span>
-			<?php echo tebasuci_icon( 'arrow-down' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?>
+			<span class="hero-scroll-arrow"><?php echo tebasuci_icon( 'arrow-down' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?></span>
 		</a>
 	<?php endif; ?>
 

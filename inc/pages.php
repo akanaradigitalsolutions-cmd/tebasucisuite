@@ -104,13 +104,13 @@ function tebasuci_rooms_data() {
 			'summary'     => __( 'A one-bedroom villa with its own private pool — a honeymoon-worthy, private oasis with rice-field views and sunsets from the water.', 'tebasuci' ),
 			'description' => array(
 				__( 'This villa has a small swimming pool in front of a private terrace, with a sofa and television in the room. Its private style suits honeymooners — you can arrange flowers in the pool when you reserve, a lovely surprise for your partner.', 'tebasuci' ),
-				__( 'Step outside to the beauty of the rice fields while you relax in your open pool, right in front of your room, and enjoy the afternoon sunset. For this category we have two villa units, and you can order a floating breakfast in your private pool from reception for a memorable romantic holiday.', 'tebasuci' ),
+				__( 'Step outside to the beauty of the rice fields while you relax in your open pool, right in front of your room, and enjoy the afternoon sunset. For this category we have three villa units, and you can order a floating breakfast in your private pool from reception for a memorable romantic holiday.', 'tebasuci' ),
 			),
 			'specs'       => array(
 				'guests' => __( '1–2 guests', 'tebasuci' ),
 				'bed'    => __( 'King bed', 'tebasuci' ),
 				'size'   => __( '4.5 m × 4.5 m', 'tebasuci' ),
-				'units'  => __( '2 units', 'tebasuci' ),
+				'units'  => __( '3 units', 'tebasuci' ),
 			),
 			'amenities'   => array_merge( $common, array( __( 'Private pool', 'tebasuci' ), __( 'Soap & shampoo', 'tebasuci' ) ) ),
 		),

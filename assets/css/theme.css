@@ -278,6 +278,10 @@ html.preloaded .site-preloader {
 		width: 100%;
 		transform: none;
 	}
+
+	.hero-scroll-arrow {
+		animation: none;
+	}
 }
 
 /* Layout wrapper
@@ -632,6 +636,13 @@ html.preloaded .site-preloader {
 .hero-scroll svg {
 	width: 1rem;
 	height: 1rem;
+}
+
+/* Animate an HTML wrapper, not the inline <svg>: Chrome runs transform
+   animations on SVG elements on the main thread, so wrapping keeps this
+   GPU-composited (no "non-composited animation" cost). */
+.hero-scroll-arrow {
+	display: inline-flex;
 	animation: nudge-down 1.8s ease-in-out infinite;
 }
 
