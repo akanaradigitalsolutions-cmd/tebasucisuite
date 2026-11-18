@@ -17,15 +17,18 @@
 			preloader.classList.add('is-hidden');
 			window.setTimeout(function () {
 				if (preloader && preloader.parentNode) preloader.parentNode.removeChild(preloader);
-			}, 700);
+			}, 650);
 		};
-		if (document.readyState === 'complete') {
-			window.setTimeout(hidePreloader, 300);
+		// Reveal as soon as the DOM is ready (don't wait for every image to
+		// load) so content — and the hero/LCP — paints quickly.
+		var startHide = function () { window.setTimeout(hidePreloader, 250); };
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', startHide);
 		} else {
-			window.addEventListener('load', function () { window.setTimeout(hidePreloader, 300); });
+			startHide();
 		}
 		// Safety: never let it block the page.
-		window.setTimeout(hidePreloader, 4000);
+		window.setTimeout(hidePreloader, 2500);
 	}
 
 	/* Cafe menu flipbook loading indicator --------------------------------- */
